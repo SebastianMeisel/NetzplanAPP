@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Upload{% endblock %}
+{% block head %}
+{% endblock %}
+  <style>
+    .custom-file-input.selected:lang(en)::after {
+      content: "" !important;
+    }
+
+    .custom-file {
+      overflow: hidden;
+    }
+
+    .custom-file-input {
+      white-space: nowrap;
+    }
+  </style>
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Datei hochladen</h1>
+
+
+      <form method="POST" enctype="multipart/form-data">
+	<div class="form-group">
+	  <label>Datei auswählen</label>
+	  <div class="custom-file">
+	    <input type=file class="custom-file-input" name=file id=file >
+	    <label class="custom-file-label" for=file>Datei auswählen...</label> 
+	  </div>
+	</div>
+	<button type=submit value=Upload class="btn btn-primary">Hochladen und Netzplan generieren</button>
+      </form>
+      
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelector('.custom-file-input').addEventListener('change',function(e){
+      var fileName = document.getElementById("file").files[0].name;
+      var nextSibling = e.target.nextElementSibling
+      nextSibling.innerText = fileName
+  })
+</script>
+{% endblock %}
