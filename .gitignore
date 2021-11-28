@@ -3,4 +3,4 @@ __*
 *#
 *~
 /static/file/uploads/*
-venv/
+venv/*
