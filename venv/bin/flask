@@ -1,4 +1,4 @@
-#!/home/sebastian/git/Netzplan_Upload/venv/bin/python
+#!/home/sebastian/git/NetzplanAPP/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

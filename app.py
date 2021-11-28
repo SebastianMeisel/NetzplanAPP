@@ -9,7 +9,7 @@ from netzplan import Projekt, Netzplan                                # Generier
 app = Flask(__name__)
 
 # Konfiguration
-app.config['UPLOAD_FOLDER'] = "/home/sebastian/git/Netzplan_Upload/static/file/uploads" # Upload-Ordner für Datei-Upload
+app.config['UPLOAD_FOLDER'] = "./static/file/uploads" # Upload-Ordner für Datei-Upload
 ALLOWED_EXTENSIONS = {'xlsx'}
 
 # Funktion zum überprüfen. ob Dateityp erlaubt ist

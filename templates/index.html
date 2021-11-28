@@ -15,14 +15,15 @@
       white-space: nowrap;
     }
   </style>
-{% block body %}
+  {% block sitetitle %}
+  Excel-Datei hochladen
+  {% endblock %}
+
+  {% block body %}
 
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Datei hochladen</h1>
-
-
       <form method="POST" enctype="multipart/form-data">
 	<div class="form-group">
 	  <label>Datei auswählen</label>

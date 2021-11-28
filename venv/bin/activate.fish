@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/sebastian/git/Netzplan_Upload/venv"
+set -gx VIRTUAL_ENV "/home/sebastian/git/NetzplanAPP/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
