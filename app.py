@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!venv/bin/python3
 import os                                                             # Zum Speichern
 from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory  # Webserver
 from werkzeug.utils import secure_filename                            # Begrenze erlaubte Dateien 

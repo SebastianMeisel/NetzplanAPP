@@ -22,6 +22,7 @@
   {% block body %}
 
 <div class="container">
+
   <div class="row">
     <div class="col">
       <form method="POST" enctype="multipart/form-data">
@@ -34,9 +35,17 @@
 	</div>
 	<button type=submit value=Upload class="btn btn-primary">Hochladen und Netzplan generieren</button>
       </form>
-      
     </div>
   </div>
+  </br>
+<footer class="card-footer">
+<p>
+    Erstelle für dein Projekt mit Hilfe der <a href="/static/file/downloads/Projekt.xltx">Vorlage</a>. </br>
+    Die ID's sind frei wählbar. </br>
+    Wenn du keine Ressourcen planst, lösche einfach die Tabelle Ressourcen.</br>
+</p>
+</footer>
+
 </div>
 <script>
   document.querySelector('.custom-file-input').addEventListener('change',function(e){
