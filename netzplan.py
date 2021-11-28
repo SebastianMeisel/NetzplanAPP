@@ -122,6 +122,7 @@ class Projekt(object):
             for Zeile in CSV: 
                 self.NeuesArbeitsPacket(Zeile["Beschreibung"], int(Zeile["Dauer"]), Zeile["ID"])
                 Folgt = Zeile["Folgt"].split(",")
+                re.sub(r'\s+','', Folgt) # Leerzeichen entfernen
                 if len(Folgt) == 1 and not Folgt[0] == '': 
                     self.ArbeitsPackete[Zeile["ID"]].Folgt(Zeile["Folgt"])
                 elif Folgt[0] != '':
@@ -135,7 +136,7 @@ class Projekt(object):
                 R_ID=Zeile["ID"]
                 Name="{VN} {NN}".format(VN=Zeile["Vorname"], NN=Zeile["Nachname"])
                 self.NeueRessource(R_ID,Name)
-                for AP in Zeile["Arbeitspackete"].split(','):
+                for AP in Zeile["Arbeitspakete"].split(','):
                     ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
                     AP_ID = ID_K[0]         # ID 
                     K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
@@ -152,6 +153,7 @@ class Projekt(object):
                 } for cell in Tabelle[1] if cell.value
             }
         # Projekt 
+        print(Workbook.sheetnames)
         Tabelle = Workbook["Projekt"]
         Spalten = SpaltenVonTabelle(Tabelle) or []
         for AP,row in enumerate(Tabelle.rows):
@@ -161,6 +163,7 @@ class Projekt(object):
                 Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value or ''
                 Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value or 0
                 Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
+                Folgt=Folgt.replace(' ','') # Leerzeichen entfernen
                 #
                 self.NeuesArbeitsPacket(Beschreibung, int(Dauer), ID)
                 # Vorgänger in Liste aufteilen
@@ -170,20 +173,22 @@ class Projekt(object):
                     for Vorgänger in Folgt.split(","):
                         self.ArbeitsPackete[ID].Folgt(Vorgänger)
         # Ressourcen
-        Tabelle = Workbook["Ressourcen"]
-        Spalten = SpaltenVonTabelle(Tabelle) if type(Tabelle) is not None else []
-        for R,row in enumerate(Tabelle.rows):
-            if R > 0:
-                R_ID = Tabelle[Spalten['ID']['Buchstabe']][R].value or ''
-                Name = "{VN} {NN}".format(VN=Tabelle[Spalten['Vorname']['Buchstabe']][R].value,
-                                          NN=Tabelle[Spalten['Nachname']['Buchstabe']][R].value) or ''
-                self.NeueRessource(R_ID,Name)
-                APs = Tabelle[Spalten['Arbeitspackete']['Buchstabe']][R].value or ''
-                for AP in APs.split(","):
-                    ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
-                    AP_ID = ID_K[0]         # Arbeitspacket-ID 
-                    K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
-                    self.RessourceZuweisen(R_ID,AP_ID,K)
+        if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
+            Tabelle = Workbook["Ressourcen"] 
+            Spalten = SpaltenVonTabelle(Tabelle) if type(Tabelle) is not None else []
+            for R,row in enumerate(Tabelle.rows):
+                if R > 0:
+                    R_ID = Tabelle[Spalten['ID']['Buchstabe']][R].value or ''
+                    Name = "{VN} {NN}".format(VN=Tabelle[Spalten['Vorname']['Buchstabe']][R].value,
+                                              NN=Tabelle[Spalten['Nachname']['Buchstabe']][R].value) or ''
+                    self.NeueRessource(R_ID,Name)
+                    APs = Tabelle[Spalten['Arbeitspakete']['Buchstabe']][R].value or ''
+                    for AP in APs.split(","):
+                        AP=AP.replace(' ','') # Leerzeichen entfernen
+                        ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
+                        AP_ID = ID_K[0]         # Arbeitspacket-ID 
+                        K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
+                        self.RessourceZuweisen(R_ID,AP_ID,K)
                 
 
     # Vorwärts- und rückwarts-rechnen
@@ -297,8 +302,8 @@ class Netzplan(object):
                 ry = 0 if yb-ya == 0 else 1 if yb-ya > 0 else -1 # Hoch/runter/geradeaus
                 rx = 1 if xb-xa >= 0 else 0 # Links/rechts
                 xm = (xa+xb)/2         # Mitte (X-Achse) zwischen Start- und Endpunkt 
-                self.Zeichnung.line((xa,ya, xa+ux+rx,
-                                     ya+(ry*3*uy)-10*ry),
+                self.Zeichnung.line((xa,ya, 
+                                     xa+ux+rx, ya+(ry*3*uy)-10*ry),
                                     fill=fill, width = width)
                 self.Zeichnung.line((xa+ux+rx, ya+(ry*3*uy)-10*ry,
                                      xb-(rx*ux), ya+(ry*3*uy)-10*ry),
