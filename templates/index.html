@@ -21,6 +21,7 @@
 
   {% block body %}
 
+  
 <div class="container">
 
   <div class="row">
@@ -28,6 +29,7 @@
       <form method="POST" enctype="multipart/form-data">
 	<div class="form-group">
 	  <label>Datei auswählen</label>
+	  <div class="alert-warning">  {{ error_message }} </div>
 	  <div class="custom-file">
 	    <input type=file class="custom-file-input" name=file id=file >
 	    <label class="custom-file-label" for=file>Datei auswählen...</label> 

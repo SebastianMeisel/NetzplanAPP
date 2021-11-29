@@ -153,13 +153,22 @@ class Projekt(object):
                 } for cell in Tabelle[1] if cell.value
             }
         # Projekt 
+        if "Projekt" not in Workbook.sheetnames: # Tabelle Projekt darf NICHT fehlen!
+            return "Tabelle 'Projekt' fehlt oder hat den falschen Namen."
+        
         print(Workbook.sheetnames)
-        Tabelle = Workbook["Projekt"]
-        Spalten = SpaltenVonTabelle(Tabelle) or []
+        Tabelle = Workbook["Projekt"]                # Tabelle einlesen
+        Spalten = SpaltenVonTabelle(Tabelle) or []   # Spalten einlesen
+
+        # Pflichtspalten überprüfen
+        for Spalte in ["Beschreibung", "Dauer", "Folgt"]:
+             if not Spalte in Spalten:
+                 return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
+        
         for AP,row in enumerate(Tabelle.rows):
             if AP > 0:
                 self.AP_ID += 1
-                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(AP_ID)
+                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(self.AP_ID)
                 Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value or ''
                 Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value or 0
                 Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
@@ -176,6 +185,12 @@ class Projekt(object):
         if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
             Tabelle = Workbook["Ressourcen"] 
             Spalten = SpaltenVonTabelle(Tabelle) if type(Tabelle) is not None else []
+
+            # Pflichtspalten überprüfen
+            for Spalte in ["ID", "Vorname", "Nachname", "Arbeitspakete"]:
+                if not Spalte in Spalten:
+                    return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
+
             for R,row in enumerate(Tabelle.rows):
                 if R > 0:
                     R_ID = Tabelle[Spalten['ID']['Buchstabe']][R].value or ''
@@ -189,7 +204,7 @@ class Projekt(object):
                         AP_ID = ID_K[0]         # Arbeitspacket-ID 
                         K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
                         self.RessourceZuweisen(R_ID,AP_ID,K)
-                
+        return "" 
 
     # Vorwärts- und rückwarts-rechnen
     def DurchRechnen(self):
