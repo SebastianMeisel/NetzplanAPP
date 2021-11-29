@@ -316,22 +316,41 @@ class Netzplan(object):
                 uy = AP.Knoten.uy      # X-Größe eines Kästchens 
                 ry = 0 if yb-ya == 0 else 1 if yb-ya > 0 else -1 # Hoch/runter/geradeaus
                 rx = 1 if xb-xa >= 0 else 0 # Links/rechts
-                xm = (xa+xb)/2         # Mitte (X-Achse) zwischen Start- und Endpunkt 
-                self.Zeichnung.line((xa,ya, 
-                                     xa+ux+rx, ya+(ry*3*uy)-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xa+ux+rx, ya+(ry*3*uy)-10*ry,
-                                     xb-(rx*ux), ya+(ry*3*uy)-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xb-(rx*ux), ya+(ry*3*uy)-10*ry,
-                                     xb-ux, ya+(ry*6*uy)-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xb-ux, ya+(ry*6*uy)-10*ry,
-                                     xb-ux, yb-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xb-ux, yb-10*ry,
-                                     xb, yb-10*ry),
-                                    fill=fill, width = width)
+                xm = (xa+xb)/2         # Mitte (X-Achse) zwischen Start- und Endpunkt
+                # 1. Strich
+                # temporäre x und y Werte
+                t_xa = xa
+                t_ya = ya
+                t_xb = xa+ux+rx
+                t_yb = ya+(ry*3*uy)-10*ry
+                self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 2. Strich
+                t_xa = t_xb
+                t_ya = t_yb
+                if t_xa <= xb-2*(rx*ux):
+                    t_xb = xb-2*(rx*ux)
+                    #t_yb = ya+(ry*3*uy)-10*ry
+                    self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 3. Strich
+                t_xa = t_xb
+                #t_ya = t_yb
+                t_xb = xb-ux+1
+                t_yb = ya+(ry*6*uy)-10*ry
+                self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 4. Strich
+                if t_yb != yb-10*ry: 
+                    t_xa = t_xb
+                    t_ya = t_yb
+                    # t_xb = xb-ux
+                    t_yb = yb-10*ry
+                    self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 5. Strich
+                t_xa = t_xb
+                t_ya = t_yb
+                t_xb = xb
+                #t_yb = yb-10*ry
+                self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+
 
         NachfolgerZeichnen(x,y-1, AP)
         ##########################################
