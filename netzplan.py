@@ -156,7 +156,6 @@ class Projekt(object):
         if "Projekt" not in Workbook.sheetnames: # Tabelle Projekt darf NICHT fehlen!
             return "Tabelle 'Projekt' fehlt oder hat den falschen Namen."
         
-        print(Workbook.sheetnames)
         Tabelle = Workbook["Projekt"]                # Tabelle einlesen
         Spalten = SpaltenVonTabelle(Tabelle) or []   # Spalten einlesen
 
@@ -171,6 +170,10 @@ class Projekt(object):
                 ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(self.AP_ID)
                 Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value or ''
                 Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value or 0
+                if Dauer == 0: # Dauer darf nicht 0 sein.
+                    if Beschreibung == '': # leere Zeile
+                        break              # Verarbeitung der Tabelle beenden
+                    return f'Dauer für {Beschreibung} ({ID}) ist nicht gesetz!' 
                 Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
                 Folgt=Folgt.replace(' ','') # Leerzeichen entfernen
                 #
