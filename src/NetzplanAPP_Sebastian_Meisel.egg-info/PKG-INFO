@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: NetzplanAPP-Sebastian-Meisel
+Version: 0.0.1
+Summary: Netzplan (PM) Online erstellen
+Home-page: https://github.com/SebastianMeisel/NetzplanAPP
+Author: Sebastian Meisel
+Author-email: sebastian.meisel@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/SebastianMeisel/NetzplanAPP/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Framework :: Flask
+Classifier: Environment :: Web Environment
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# NetzplanAPP
+
+Dies App startet einen Webservice unter [http://127.0.0.1:5000](http://127.0.0.1:5000).
+Nutzende haben die Möglichkeit eine Exceldatei mit Projektdaten hochzuladen, aus der
+ein Netzplan zur Projektplanung als PDF- und JPG-Datei erstellt wird.
+Es wird ein [Template](http://127.0.0.1:5000/static/file/downloads/Projekt.xltx) angeboten,
+um eine Excel-Datei zu erstellen, die von der App verarbeitet werden kann.
+
+
