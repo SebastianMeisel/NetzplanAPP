@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: NetzplanAPP-Sebastian-Meisel
 Version: 0.0.1
-Summary: Netzplan (PM) Online erstellen
+Summary: Online-Tool: Netzplan zur Projektplanung
 Home-page: https://github.com/SebastianMeisel/NetzplanAPP
 Author: Sebastian Meisel
 Author-email: sebastian.meisel@gmail.com
@@ -9,11 +9,8 @@ License: UNKNOWN
 Project-URL: Bug Tracker, https://github.com/SebastianMeisel/NetzplanAPP/issues
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
-Classifier: License :: OSI Approved :: MIT License
-Classifier: Framework :: Flask
-Classifier: Environment :: Web Environment
 Classifier: License :: OSI Approved :: GNU General Public License (GPL)
-Classifier: Operating System :: OS Independent
+Classifier: Framework :: Flask
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
 License-File: LICENSE
