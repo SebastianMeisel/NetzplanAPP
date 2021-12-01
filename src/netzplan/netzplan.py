@@ -153,15 +153,27 @@ class Projekt(object):
                 } for cell in Tabelle[1] if cell.value
             }
         # Projekt 
-        print(Workbook.sheetnames)
-        Tabelle = Workbook["Projekt"]
-        Spalten = SpaltenVonTabelle(Tabelle) or []
+        if "Projekt" not in Workbook.sheetnames: # Tabelle Projekt darf NICHT fehlen!
+            return "Tabelle 'Projekt' fehlt oder hat den falschen Namen."
+        
+        Tabelle = Workbook["Projekt"]                # Tabelle einlesen
+        Spalten = SpaltenVonTabelle(Tabelle) or []   # Spalten einlesen
+
+        # Pflichtspalten überprüfen
+        for Spalte in ["Beschreibung", "Dauer", "Folgt"]:
+             if not Spalte in Spalten:
+                 return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
+        
         for AP,row in enumerate(Tabelle.rows):
             if AP > 0:
                 self.AP_ID += 1
-                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(AP_ID)
+                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(self.AP_ID)
                 Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value or ''
                 Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value or 0
+                if Dauer == 0: # Dauer darf nicht 0 sein.
+                    if Beschreibung == '': # leere Zeile
+                        break              # Verarbeitung der Tabelle beenden
+                    return f'Dauer für {Beschreibung} ({ID}) ist nicht gesetz!' 
                 Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
                 Folgt=Folgt.replace(' ','') # Leerzeichen entfernen
                 #
@@ -176,6 +188,12 @@ class Projekt(object):
         if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
             Tabelle = Workbook["Ressourcen"] 
             Spalten = SpaltenVonTabelle(Tabelle) if type(Tabelle) is not None else []
+
+            # Pflichtspalten überprüfen
+            for Spalte in ["ID", "Vorname", "Nachname", "Arbeitspakete"]:
+                if not Spalte in Spalten:
+                    return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
+
             for R,row in enumerate(Tabelle.rows):
                 if R > 0:
                     R_ID = Tabelle[Spalten['ID']['Buchstabe']][R].value or ''
@@ -189,7 +207,7 @@ class Projekt(object):
                         AP_ID = ID_K[0]         # Arbeitspacket-ID 
                         K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
                         self.RessourceZuweisen(R_ID,AP_ID,K)
-                
+        return "" 
 
     # Vorwärts- und rückwarts-rechnen
     def DurchRechnen(self):
@@ -301,22 +319,41 @@ class Netzplan(object):
                 uy = AP.Knoten.uy      # X-Größe eines Kästchens 
                 ry = 0 if yb-ya == 0 else 1 if yb-ya > 0 else -1 # Hoch/runter/geradeaus
                 rx = 1 if xb-xa >= 0 else 0 # Links/rechts
-                xm = (xa+xb)/2         # Mitte (X-Achse) zwischen Start- und Endpunkt 
-                self.Zeichnung.line((xa,ya, 
-                                     xa+ux+rx, ya+(ry*3*uy)-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xa+ux+rx, ya+(ry*3*uy)-10*ry,
-                                     xb-(rx*ux), ya+(ry*3*uy)-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xb-(rx*ux), ya+(ry*3*uy)-10*ry,
-                                     xb-ux, ya+(ry*6*uy)-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xb-ux, ya+(ry*6*uy)-10*ry,
-                                     xb-ux, yb-10*ry),
-                                    fill=fill, width = width)
-                self.Zeichnung.line((xb-ux, yb-10*ry,
-                                     xb, yb-10*ry),
-                                    fill=fill, width = width)
+                xm = (xa+xb)/2         # Mitte (X-Achse) zwischen Start- und Endpunkt
+                # 1. Strich
+                # temporäre x und y Werte
+                t_xa = xa
+                t_ya = ya
+                t_xb = xa+ux+rx
+                t_yb = ya+(ry*3*uy)-10*ry
+                self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 2. Strich
+                t_xa = t_xb
+                t_ya = t_yb
+                if t_xa <= xb-2*(rx*ux):
+                    t_xb = xb-2*(rx*ux)
+                    #t_yb = ya+(ry*3*uy)-10*ry
+                    self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 3. Strich
+                t_xa = t_xb
+                #t_ya = t_yb
+                t_xb = xb-ux+1
+                t_yb = ya+(ry*6*uy)-10*ry
+                self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 4. Strich
+                if t_yb != yb-10*ry: 
+                    t_xa = t_xb
+                    t_ya = t_yb
+                    # t_xb = xb-ux
+                    t_yb = yb-10*ry
+                    self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+                # 5. Strich
+                t_xa = t_xb
+                t_ya = t_yb
+                t_xb = xb
+                #t_yb = yb-10*ry
+                self.Zeichnung.line((t_xa,t_ya, t_xb,t_yb),fill=fill, width = width)
+
 
         NachfolgerZeichnen(x,y-1, AP)
         ##########################################

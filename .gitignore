@@ -4,3 +4,4 @@ __*
 *~
 /static/file/uploads/*
 venv/*
+*.swp
