@@ -7,84 +7,6 @@ from openpyxl.utils import get_column_letter # Spalten-Namen in Excel
 # Netzplan berechnen und zeichnen
 version = 0.1
 
-###############################################################
-# Arbeitspacket-Objekt
-class ArbeitsPacket(object):  
-
-    # Konstruktor #############################################
-    def __init__(self, ID, Bezeichnung: str, PT: int, Projekt: object):
-        self.ID = ID 
-        self.Bezeichnung = Bezeichnung
-        self.PT = PT # Personentage
-        self.Projekt = Projekt # einem Projekt zuordnen
-        ###############################
-        self.Dauer = self.PT
-        self.FAZ = 0 # Früheste Anfangszeit
-        self.FEZ = self.Dauer # Früheste Endzeit
-        self.SAZ = 0 # Späteste Anfangszeit
-        self.SEZ = 0 # Späteste Endzeit
-        self.GP  = 0 # Gesamtpuffer
-        self.FP  = 0 # Freier Puffer
-        self.Nachfolger = [] # Liste der Nachfolger
-        self.Vorgänger = [] # Liste der Vorgänger
-        self.Knoten     = None # Knoten im Netzplan
-        self.Ressourcen = []
-
-    # Vorgänger hinzufügen
-    def Folgt(self, Vorgänger: str or list):
-        # Unterscheide ob einzelnes Arbeitspacket oder Liste
-        if type(Vorgänger) is list:
-            for V in Vorgänger:
-                self.Vorgänger.append(self.Projekt.ArbeitsPackete[V])
-                self.Projekt.ArbeitsPackete[V].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen + Zähler für Nachfolger vorbereiten
-        else:
-            self.Vorgänger.append(self.Projekt.ArbeitsPackete[Vorgänger]) # Vorgänger hinzufügen
-            self.Projekt.ArbeitsPackete[Vorgänger].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen
-
-    # Früheste Anfangs- und Endzeit bestimmen    
-    def getFXZ(self):
-        # Früheste Anfangszeit
-        if len(self.Vorgänger) > 0:
-            self.FAZ = max(AP.FEZ for AP in self.Vorgänger)
-        # Frühester Endzeitpunkt
-        self.FEZ = self.Dauer + self.FAZ
-
-
-    # Späteste Anfangs- und Endzeit und Puffer bestimmen    
-    def getSXZ(self):
-        # Späteste Endzeit
-        if len(self.Nachfolger) > 0:
-            self.SEZ = min(AP[0].SAZ for AP in self.Nachfolger)
-        else: # Wenn kein Nachfolger nach früheste Endzeit übernehmen
-            self.SEZ = self.FEZ
-
-        # Späteste Anfangszeit
-        self.SAZ = self.SEZ - self.Dauer
-
-        # Gesamtpuffer
-        self.GP = self.SEZ - self.FEZ
-
-        # Freier Puffer
-        if len(self.Nachfolger) > 0:
-            self.FP = min(AP[0].FAZ for AP in self.Nachfolger) - self.FEZ
-
-
-#######################################################################################
-# Resource-Objekt
-
-class Ressource(object):
-    # Konstrukor
-    def __init__(self, Name:str, Projekt:object):
-        self.Name = Name
-        self.Projekt = Projekt # Projekt zuordnen
-        #################
-        self.ArbeitsPackete = {} # Arbeitspackete und Kapazität, die der Ressource zugeordnet werden
-
-    def NeuesArbeitsPacket(self, AP: str, Kapazität=100):
-        self.ArbeitsPackete[self.Projekt.ArbeitsPackete[AP].ID] = Kapazität
-        self.Projekt.ArbeitsPackete[AP].Ressourcen.append(self)
-        
-        
 #######################################################################################
 # Projekt-Objekt
 
@@ -95,16 +17,16 @@ class Projekt(object):
         self.ID = ID
         self.Bezeichnung = Bezeichnung
         ##############
-        self.ArbeitsPackete = {}
-        self.KritischerPfad = []
+        self.ArbeitsPakete: Dict[str, object] = {}
+        self.KritischerPfad: List[str] = []
         self.AP_ID = 0 # Arbeitspacket-Identifier automatisch hochzählen
-        self.Ressourcen = {}
+        self.Ressourcen: Dict[str, object] = {}
         
     # Arbeitspaket hinzufügen
-    def NeuesArbeitsPacket(self, Bezeichnung: str, PT: int, ID=None):
+    def NeuesArbeitsPaket(self, Bezeichnung: str, PT: int, ID=None):
         self.AP_ID += 1
-        AP = ArbeitsPacket(ID if ID else self.AP_ID, Bezeichnung, PT, self)
-        self.ArbeitsPackete[str(AP.ID)] = AP
+        AP = ArbeitsPaket(ID if ID else self.AP_ID, Bezeichnung, PT, self)
+        self.ArbeitsPakete[str(AP.ID)] = AP
 
     # Ressource hinzufügen
     def NeueRessource(self, ID:str, Name:str):
@@ -112,21 +34,21 @@ class Projekt(object):
         self.Ressourcen[ID] = R 
 
     # Ressource zuweisen
-    def RessourceZuweisen(self, RessourcenID: str, ArbeitsPacketID: str, Kapazität = 100):
-        self.Ressourcen[RessourcenID].NeuesArbeitsPacket(ArbeitsPacketID, Kapazität)
+    def RessourceZuweisen(self, RessourcenID: str, ArbeitsPaketID: str, Kapazität = 100):
+        self.Ressourcen[RessourcenID].NeuesArbeitsPaket(ArbeitsPaketID, Kapazität)
         
     # Arbeispaketlist als CSV importieren
-    def ImportiereArbeitsPacketListeVonCSV(self, Dateiname:str):
+    def ImportiereArbeitsPaketListeVonCSV(self, Dateiname:str):
         with open(Dateiname, newline='') as csvfile:
             CSV = csv.DictReader(csvfile, delimiter=';', quotechar='"')
             for Zeile in CSV: 
-                self.NeuesArbeitsPacket(Zeile["Beschreibung"], int(Zeile["Dauer"]), Zeile["ID"])
-                Folgt = Zeile["Folgt"].split(",")
-                re.sub(r'\s+','', Folgt) # Leerzeichen entfernen
+                self.NeuesArbeitsPaket(Zeile["Beschreibung"], int(Zeile["Dauer"]), Zeile["ID"])
+                Folgt = re.sub(r'\s+','', Zeile["Folgt"]).split(",")
+                print(Folgt)
                 if len(Folgt) == 1 and not Folgt[0] == '': 
-                    self.ArbeitsPackete[Zeile["ID"]].Folgt(Zeile["Folgt"])
+                    self.ArbeitsPakete[Zeile["ID"]].Folgt(Zeile["Folgt"])
                 elif Folgt[0] != '':
-                    self.ArbeitsPackete[Zeile["ID"]].Folgt(Folgt)
+                    self.ArbeitsPakete[Zeile["ID"]].Folgt(Folgt)
     
     # Ressourcen als CSV importieren
     def ImportiereRessourcenVonCSV(self, Dateiname:str):
@@ -177,13 +99,13 @@ class Projekt(object):
                 Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
                 Folgt=Folgt.replace(' ','') # Leerzeichen entfernen
                 #
-                self.NeuesArbeitsPacket(Beschreibung, int(Dauer), ID)
+                self.NeuesArbeitsPaket(Beschreibung, int(Dauer), ID)
                 # Vorgänger in Liste aufteilen
                 if len(Folgt.split(",")) == 1 and not Folgt.split(",")[0] == '':
-                    self.ArbeitsPackete[ID].Folgt(Folgt)
+                    self.ArbeitsPakete[ID].Folgt(Folgt)
                 elif Folgt.split(",")[0] != '':
                     for Vorgänger in Folgt.split(","):
-                        self.ArbeitsPackete[ID].Folgt(Vorgänger)
+                        self.ArbeitsPakete[ID].Folgt(Vorgänger)
         # Ressourcen
         if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
             Tabelle = Workbook["Ressourcen"] 
@@ -229,20 +151,20 @@ class Projekt(object):
                 RückwärtsRechnen(VG)
 
         # Kapazität je Arbeitspacket berechnen -> Dauer berechnen
-        for AP in list(self.ArbeitsPackete.values()):
+        for AP in list(self.ArbeitsPakete.values()):
             PersonenKapazität = 0  # Personen * Kapazität%
             # Personen-Kapazität berechnen
             for R in AP.Ressourcen:
-                PersonenKapazität += R.ArbeitsPackete[AP.ID] / 100
+                PersonenKapazität += R.ArbeitsPakete[AP.ID] / 100
             # Wenn keine Resourchen zugeordnet sind, dann mit einer Person, 100% rechnen
             if PersonenKapazität == 0:
                 PersonenKapazität = 1
             # Dauer = PersonenTage / PersonenKapazität
             AP.Dauer = int(AP.PT / PersonenKapazität) + (AP.PT % PersonenKapazität>0) # Aufrunden 
         # Vorwärts- und Rückwärtsrechnen
-        AP = list(self.ArbeitsPackete.values())[0]
+        AP = list(self.ArbeitsPakete.values())[0]
         VorwärtsRechnen(AP)
-        for ap in reversed(list(self.ArbeitsPackete.values())):
+        for ap in reversed(list(self.ArbeitsPakete.values())):
             if len(ap.Nachfolger) == 0:
                 AP = ap
                 break
@@ -257,6 +179,85 @@ class Projekt(object):
             if i < len(self.KritischerPfad)-1:
                 print(" - ", end="")
         print("]")
+
+###############################################################
+# Arbeitspacket-Objekt
+class ArbeitsPaket(object):  
+
+    # Konstruktor #############################################
+    def __init__(self, ID, Bezeichnung: str, PT: int, Projekt: object):
+        self.ID = ID 
+        self.Bezeichnung = Bezeichnung
+        self.PT = PT # Personentage
+        self.Projekt = Projekt # einem Projekt zuordnen
+        ###############################
+        self.Dauer = self.PT
+        self.FAZ = 0 # Früheste Anfangszeit
+        self.FEZ = self.Dauer # Früheste Endzeit
+        self.SAZ = 0 # Späteste Anfangszeit
+        self.SEZ = 0 # Späteste Endzeit
+        self.GP  = 0 # Gesamtpuffer
+        self.FP  = 0 # Freier Puffer
+        self.Nachfolger: List[list] = [] # Liste der Nachfolger
+        self.Vorgänger: List[object] = [] # Liste der Vorgänger
+        self.Knoten     = None # Knoten im Netzplan
+        self.Ressourcen = []
+
+    # Vorgänger hinzufügen
+    def Folgt(self, Vorgänger: str or list):
+        # Unterscheide ob einzelnes Arbeitspacket oder Liste
+        if type(Vorgänger) is list:
+            for V in Vorgänger:
+                self.Vorgänger.append(self.Projekt.ArbeitsPakete[V])
+                self.Projekt.ArbeitsPakete[V].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen + Zähler für Nachfolger vorbereiten
+        else:
+            self.Vorgänger.append(self.Projekt.ArbeitsPakete[Vorgänger]) # Vorgänger hinzufügen
+            self.Projekt.ArbeitsPakete[Vorgänger].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen
+
+    # Früheste Anfangs- und Endzeit bestimmen    
+    def getFXZ(self):
+        # Früheste Anfangszeit
+        if len(self.Vorgänger) > 0:
+            self.FAZ = max(AP.FEZ for AP in self.Vorgänger)
+        # Frühester Endzeitpunkt
+        self.FEZ = self.Dauer + self.FAZ
+
+
+    # Späteste Anfangs- und Endzeit und Puffer bestimmen    
+    def getSXZ(self):
+        # Späteste Endzeit
+        if len(self.Nachfolger) > 0:
+            self.SEZ = min(AP[0].SAZ for AP in self.Nachfolger)
+        else: # Wenn kein Nachfolger nach früheste Endzeit übernehmen
+            self.SEZ = self.FEZ
+
+        # Späteste Anfangszeit
+        self.SAZ = self.SEZ - self.Dauer
+
+        # Gesamtpuffer
+        self.GP = self.SEZ - self.FEZ
+
+        # Freier Puffer
+        if len(self.Nachfolger) > 0:
+            self.FP = min(AP[0].FAZ for AP in self.Nachfolger) - self.FEZ
+
+
+#######################################################################################
+# Resource-Objekt
+
+class Ressource(object):
+    # Konstrukor
+    def __init__(self, Name:str, Projekt:object):
+        self.Name = Name
+        self.Projekt = Projekt # Projekt zuordnen
+        #################
+        self.ArbeitsPakete = {} # Arbeitspackete und Kapazität, die der Ressource zugeordnet werden
+
+    def NeuesArbeitsPaket(self, AP: str, Kapazität=100):
+        self.ArbeitsPakete[self.Projekt.ArbeitsPakete[AP].ID] = Kapazität
+        self.Projekt.ArbeitsPakete[AP].Ressourcen.append(self)
+        
+        
 
 ####################################################################       
 # Netzplan-Object 
@@ -289,14 +290,14 @@ class Netzplan(object):
         K.Zeichnen()                                   # … zeichnen
         self.Knoten.append(K.ID)                       # … (ID) in Knoten-Liste des Netzplans eintragen
         self.Raster.append(str(x)+str(y))
-        AP.Knoten = K                                  # … dem ArbeitsPacket zuordnen
+        AP.Knoten = K                                  # … dem ArbeitsPaket zuordnen
         
     # Netzplan zeichnen    
     def Zeichnen(self, Projekt: object):
         x = .5
         y = .5        
         Projekt.DurchRechnen()
-        AP = list(Projekt.ArbeitsPackete.values())[0]
+        AP = list(Projekt.ArbeitsPakete.values())[0]
         self.NeuerKnoten(x,y, AP) 
         # Hilfsfunktion
         def NachfolgerZeichnen(x: int, y: int, AP: object):
@@ -379,19 +380,19 @@ class Netzplan(object):
         self.Zeichnung.text((x,y),"Projekt: {Name:<60}".format(Name=Projekt.Bezeichnung), (0,0,0), font=self.heading_font)
         y += 40
         self.Zeichnung.text((x,y),"ID {A:<6}: {B:<25}: {C:^7}: {D:<40}".format(A="", B="Bezeichnung", C="Dauer", D=R), (0,0,0), font=self.bold_font)
-        for AP in list(Projekt.ArbeitsPackete.values()):
+        for AP in list(Projekt.ArbeitsPakete.values()):
             y += 30
             # Ressourcen checken
             Ressourcen = ""
             i = 0 # zähle Ressourcen des Arbeitspackets
             for R in list(Projekt.Ressourcen.values()):
-                if str(AP.ID) in R.ArbeitsPackete.keys():
+                if str(AP.ID) in R.ArbeitsPakete.keys():
                     i += 1
                     if i > 1:
                         Ressourcen += ', '
                     Ressourcen += R.Name
-                    if R.ArbeitsPackete[str(AP.ID)] != 100:
-                        Ressourcen += "("+str(R.ArbeitsPackete[str(AP.ID)])+"%)"
+                    if R.ArbeitsPakete[str(AP.ID)] != 100:
+                        Ressourcen += "("+str(R.ArbeitsPakete[str(AP.ID)])+"%)"
             self.Zeichnung.text((x,y),"AP {ID:<6}: {Bezeichnung:<25}: {Dauer:7}: {Ressourcen:<40} ".format(ID=AP.ID, Bezeichnung=AP.Bezeichnung, Dauer=AP.Dauer, Ressourcen=Ressourcen), (0,0,0), font=self.font)
                     
         

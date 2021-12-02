@@ -5,3 +5,5 @@ __*
 /static/file/uploads/*
 venv/*
 *.swp
+/NetzplanAPP_Sebastian_Meisel.egg-info/
+/src/NetzplanAPP/static/file/uploads/*

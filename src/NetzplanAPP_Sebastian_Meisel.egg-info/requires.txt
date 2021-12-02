@@ -1,0 +1,4 @@
+Flask>=2
+Pillow>=8
+openpyxl>=3
+Werkzeug>=2
