@@ -7,3 +7,4 @@ venv/*
 *.swp
 /NetzplanAPP_Sebastian_Meisel.egg-info/
 /src/NetzplanAPP/static/file/uploads/*
+src/NetzplanAPP/static/file/uploads/*.pdf

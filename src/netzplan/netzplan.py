@@ -3,6 +3,7 @@ import csv                                # für CVS-Import
 import re
 from openpyxl import load_workbook        # für Excel-Import
 from openpyxl.utils import get_column_letter # Spalten-Namen in Excel
+from typing import List, Dict
 
 # Netzplan berechnen und zeichnen
 version = 0.1
@@ -17,10 +18,10 @@ class Projekt(object):
         self.ID = ID
         self.Bezeichnung = Bezeichnung
         ##############
-        self.ArbeitsPakete: Dict[str, object] = {}
+        self.ArbeitsPakete: Dict[str, ArbeitsPaket] = {}
         self.KritischerPfad: List[str] = []
         self.AP_ID = 0 # Arbeitspacket-Identifier automatisch hochzählen
-        self.Ressourcen: Dict[str, object] = {}
+        self.Ressourcen: Dict[str, Ressource] = {}
         
     # Arbeitspaket hinzufügen
     def NeuesArbeitsPaket(self, Bezeichnung: str, PT: int, ID=None):
@@ -65,7 +66,7 @@ class Projekt(object):
                     self.RessourceZuweisen(R_ID,AP_ID,K)
 
     # Projekt aus Excel importieren
-    def ImportiereVonExcel(self, Dateiname:str):
+    def ImportiereVonExcel(self, Dateiname:str) -> str:
         Workbook =  load_workbook(filename=Dateiname)
         def SpaltenVonTabelle(Tabelle):
             return {
@@ -122,10 +123,12 @@ class Projekt(object):
                     Name = "{VN} {NN}".format(VN=Tabelle[Spalten['Vorname']['Buchstabe']][R].value,
                                               NN=Tabelle[Spalten['Nachname']['Buchstabe']][R].value) or ''
                     self.NeueRessource(R_ID,Name)
-                    APs = Tabelle[Spalten['Arbeitspakete']['Buchstabe']][R].value or ''
-                    for AP in APs.split(","):
-                        AP=AP.replace(' ','') # Leerzeichen entfernen
-                        ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
+                    Zeilen: str
+                    Zeilen = Tabelle[Spalten['Arbeitspakete']['Buchstabe']][R].value or ''
+                    Zeile: str
+                    for Zeile in Zeilen.split(","):
+                        Zeile=Zeile.replace(' ','') # Leerzeichen entfernen
+                        ID_K = Zeile.split(":", 1) # in ID und Kapazität aufspalten
                         AP_ID = ID_K[0]         # Arbeitspacket-ID 
                         K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
                         self.RessourceZuweisen(R_ID,AP_ID,K)
@@ -134,11 +137,11 @@ class Projekt(object):
     # Vorwärts- und rückwarts-rechnen
     def DurchRechnen(self):
         #Hilfsfunktionen
-        def VorwärtsRechnen(AP: object) -> object:
+        def VorwärtsRechnen(AP: ArbeitsPaket):
             AP.getFXZ()
             for NF in AP.Nachfolger:
                 VorwärtsRechnen(NF[0])
-        def RückwärtsRechnen(AP: object):
+        def RückwärtsRechnen(AP: ArbeitsPaket):
             AP.getSXZ()
             if AP.GP == 0 and not AP.ID in self.KritischerPfad:
                 self.KritischerPfad.append(AP.ID)
@@ -152,6 +155,7 @@ class Projekt(object):
 
         # Kapazität je Arbeitspacket berechnen -> Dauer berechnen
         for AP in list(self.ArbeitsPakete.values()):
+            PersonenKapazität: float
             PersonenKapazität = 0  # Personen * Kapazität%
             # Personen-Kapazität berechnen
             for R in AP.Ressourcen:
@@ -185,7 +189,7 @@ class Projekt(object):
 class ArbeitsPaket(object):  
 
     # Konstruktor #############################################
-    def __init__(self, ID, Bezeichnung: str, PT: int, Projekt: object):
+    def __init__(self, ID, Bezeichnung: str, PT: int, Projekt: Projekt):
         self.ID = ID 
         self.Bezeichnung = Bezeichnung
         self.PT = PT # Personentage
@@ -199,12 +203,12 @@ class ArbeitsPaket(object):
         self.GP  = 0 # Gesamtpuffer
         self.FP  = 0 # Freier Puffer
         self.Nachfolger: List[list] = [] # Liste der Nachfolger
-        self.Vorgänger: List[object] = [] # Liste der Vorgänger
+        self.Vorgänger: List[ArbeitsPaket] = [] # Liste der Vorgänger
         self.Knoten     = None # Knoten im Netzplan
-        self.Ressourcen = []
+        self.Ressourcen: List[Ressource] = []
 
     # Vorgänger hinzufügen
-    def Folgt(self, Vorgänger: str or list):
+    def Folgt(self, Vorgänger):
         # Unterscheide ob einzelnes Arbeitspacket oder Liste
         if type(Vorgänger) is list:
             for V in Vorgänger:
@@ -247,11 +251,11 @@ class ArbeitsPaket(object):
 
 class Ressource(object):
     # Konstrukor
-    def __init__(self, Name:str, Projekt:object):
+    def __init__(self, Name:str, Projekt:Projekt):
         self.Name = Name
         self.Projekt = Projekt # Projekt zuordnen
         #################
-        self.ArbeitsPakete = {} # Arbeitspackete und Kapazität, die der Ressource zugeordnet werden
+        self.ArbeitsPakete: Dict[ArbeitsPaket, int] = {} # Arbeitspackete und Kapazität, die der Ressource zugeordnet werden
 
     def NeuesArbeitsPaket(self, AP: str, Kapazität=100):
         self.ArbeitsPakete[self.Projekt.ArbeitsPakete[AP].ID] = Kapazität
@@ -280,27 +284,27 @@ class Netzplan(object):
         # Zeichnung um Netzplan aufzunehmen
         self.Zeichnung = ImageDraw.Draw(self.a4image)
         # Listen: Knoten Raster
-        self.Knoten = [] # Knoten auf der Zeichnung
-        self.Raster = [] # Liste der Belegten Positionen im Raster um Überschneidungen zu vermeiden
+        self.Knoten: List[int]= [] # Knoten auf der Zeichnung
+        self.Raster: List[str] = [] # Liste der Belegten Positionen im Raster um Überschneidungen zu vermeiden
 
     # Knoten hinzufügen    
-    def NeuerKnoten(self, x: int, y:int, AP: object):    
+    def NeuerKnoten(self, x: float, y:float, AP: ArbeitsPaket):    
         # Knoten-Objekt …
-        K = Knoten(AP.ID, x, y, AP, self.Zeichnung)    # … anlegen
+        K: Knoten = Knoten(AP.ID, x, y, AP, self.Zeichnung)    # … anlegen
         K.Zeichnen()                                   # … zeichnen
         self.Knoten.append(K.ID)                       # … (ID) in Knoten-Liste des Netzplans eintragen
         self.Raster.append(str(x)+str(y))
         AP.Knoten = K                                  # … dem ArbeitsPaket zuordnen
         
     # Netzplan zeichnen    
-    def Zeichnen(self, Projekt: object):
+    def Zeichnen(self, Projekt: Projekt):
         x = .5
         y = .5        
         Projekt.DurchRechnen()
-        AP = list(Projekt.ArbeitsPakete.values())[0]
+        AP: ArbeitsPaket = list(Projekt.ArbeitsPakete.values())[0]
         self.NeuerKnoten(x,y, AP) 
         # Hilfsfunktion
-        def NachfolgerZeichnen(x: int, y: int, AP: object):
+        def NachfolgerZeichnen(x: float, y: float, AP: ArbeitsPaket):
             x += 1
             # Wenn Rasterpunkt belegt, dann neue Zeile anfangen.
             for NF in reversed(sorted(AP.Nachfolger, key=lambda liste: liste[-1])) :
@@ -424,7 +428,7 @@ class Legende(object):
 #################################################################
 # Knoten-Object
 class Knoten(object):
-    def __init__(self, ID: int, x: int, y: int, AP: object, Zeichnung: object):
+    def __init__(self, ID: int, x: float, y: float, AP: ArbeitsPaket, Zeichnung: object):
         self.ID = ID # ID des Knotens
         self.x = x   # X im Knotenraster
         self.y = y   # Y im Knotenraster
