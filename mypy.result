@@ -1,0 +1,69 @@
+src/netzplan/netzplan.py:93: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:93: note: Possible overload variants:
+src/netzplan/netzplan.py:93: note:     def __getitem__(self, SupportsIndex) -> Any
+src/netzplan/netzplan.py:93: note:     def __getitem__(self, slice) -> List[Any]
+src/netzplan/netzplan.py:94: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:94: note: Possible overload variants:
+src/netzplan/netzplan.py:94: note:     def __getitem__(self, SupportsIndex) -> Any
+src/netzplan/netzplan.py:94: note:     def __getitem__(self, slice) -> List[Any]
+src/netzplan/netzplan.py:95: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:95: note: Possible overload variants:
+src/netzplan/netzplan.py:95: note:     def __getitem__(self, SupportsIndex) -> Any
+src/netzplan/netzplan.py:95: note:     def __getitem__(self, slice) -> List[Any]
+src/netzplan/netzplan.py:100: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:100: note: Possible overload variants:
+src/netzplan/netzplan.py:100: note:     def __getitem__(self, SupportsIndex) -> Any
+src/netzplan/netzplan.py:100: note:     def __getitem__(self, slice) -> List[Any]
+src/netzplan/netzplan.py:122: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:122: note: Possible overload variants:
+src/netzplan/netzplan.py:122: note:     def __getitem__(self, SupportsIndex) -> <nothing>
+src/netzplan/netzplan.py:122: note:     def __getitem__(self, slice) -> List[<nothing>]
+src/netzplan/netzplan.py:123: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:123: note: Possible overload variants:
+src/netzplan/netzplan.py:123: note:     def __getitem__(self, SupportsIndex) -> <nothing>
+src/netzplan/netzplan.py:123: note:     def __getitem__(self, slice) -> List[<nothing>]
+src/netzplan/netzplan.py:124: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:124: note: Possible overload variants:
+src/netzplan/netzplan.py:124: note:     def __getitem__(self, SupportsIndex) -> <nothing>
+src/netzplan/netzplan.py:124: note:     def __getitem__(self, slice) -> List[<nothing>]
+src/netzplan/netzplan.py:126: error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
+src/netzplan/netzplan.py:126: note: Possible overload variants:
+src/netzplan/netzplan.py:126: note:     def __getitem__(self, SupportsIndex) -> <nothing>
+src/netzplan/netzplan.py:126: note:     def __getitem__(self, slice) -> List[<nothing>]
+src/netzplan/netzplan.py:127: error: Incompatible types in assignment (expression has type "Union[Any, str]", variable has type "int")  [assignment]
+src/netzplan/netzplan.py:128: error: "int" has no attribute "replace"  [attr-defined]
+src/netzplan/netzplan.py:129: error: "int" has no attribute "split"  [attr-defined]
+src/netzplan/netzplan.py:138: error: Missing return statement  [return]
+src/netzplan/netzplan.py:150: error: No overload variant of "__setitem__" of "list" matches argument types "int", "Tuple[ArbeitsPaket, Any]"  [call-overload]
+src/netzplan/netzplan.py:150: note: Possible overload variants:
+src/netzplan/netzplan.py:150: note:     def __setitem__(self, SupportsIndex, List[Any]) -> None
+src/netzplan/netzplan.py:150: note:     def __setitem__(self, slice, Iterable[List[Any]]) -> None
+src/netzplan/netzplan.py:202: error: Implicit generic "Any". Use "typing.List" and specify generic parameters  [type-arg]
+src/netzplan/netzplan.py:208: error: Invalid type comment or annotation  [valid-type]
+src/netzplan/netzplan.py:255: error: Need type annotation for "ArbeitsPakete" (hint: "ArbeitsPakete: Dict[<type>, <type>] = ...")  [var-annotated]
+src/netzplan/netzplan.py:284: error: Need type annotation for "Knoten" (hint: "Knoten: List[<type>] = ...")  [var-annotated]
+src/netzplan/netzplan.py:285: error: Need type annotation for "Raster" (hint: "Raster: List[<type>] = ...")  [var-annotated]
+src/netzplan/netzplan.py:294: error: Incompatible types in assignment (expression has type "Knoten", variable has type "None")  [assignment]
+src/netzplan/netzplan.py:302: error: Argument 1 to "NeuerKnoten" of "Netzplan" has incompatible type "float"; expected "int"  [arg-type]
+src/netzplan/netzplan.py:302: error: Argument 2 to "NeuerKnoten" of "Netzplan" has incompatible type "float"; expected "int"  [arg-type]
+src/netzplan/netzplan.py:307: error: Returning Any from function declared to return "SupportsLessThan"  [no-any-return]
+src/netzplan/netzplan.py:318: error: "None" has no attribute "aus"  [attr-defined]
+src/netzplan/netzplan.py:320: error: "None" has no attribute "ux"  [attr-defined]
+src/netzplan/netzplan.py:321: error: "None" has no attribute "uy"  [attr-defined]
+src/netzplan/netzplan.py:360: error: Argument 1 to "NachfolgerZeichnen" has incompatible type "float"; expected "int"  [arg-type]
+src/netzplan/netzplan.py:360: error: Argument 2 to "NachfolgerZeichnen" has incompatible type "float"; expected "int"  [arg-type]
+src/netzplan/netzplan.py:364: error: Argument 1 to "NeuerKnoten" of "Netzplan" has incompatible type "float"; expected "int"  [arg-type]
+src/netzplan/netzplan.py:364: error: Argument 2 to "NeuerKnoten" of "Netzplan" has incompatible type "float"; expected "int"  [arg-type]
+src/netzplan/netzplan.py:364: error: Argument 3 to "NeuerKnoten" of "Netzplan" has incompatible type "Legende"; expected "ArbeitsPaket"  [arg-type]
+src/netzplan/netzplan.py:365: error: "None" has no attribute "dx"  [attr-defined]
+src/netzplan/netzplan.py:366: error: "None" has no attribute "dy"  [attr-defined]
+src/netzplan/netzplan.py:366: error: "None" has no attribute "uy"  [attr-defined]
+src/netzplan/netzplan.py:378: error: "None" has no attribute "dy"  [attr-defined]
+src/netzplan/netzplan.py:379: error: "None" has no attribute "dx"  [attr-defined]
+src/netzplan/netzplan.py:389: error: Incompatible types in assignment (expression has type "Ressource", variable has type "str")  [assignment]
+src/netzplan/netzplan.py:390: error: "str" has no attribute "ArbeitsPakete"  [attr-defined]
+src/netzplan/netzplan.py:394: error: "str" has no attribute "Name"  [attr-defined]
+src/netzplan/netzplan.py:395: error: "str" has no attribute "ArbeitsPakete"  [attr-defined]
+src/netzplan/netzplan.py:396: error: "str" has no attribute "ArbeitsPakete"  [attr-defined]
+src/netzplan/netzplan.py:428: error: Name "Zeichnung" is not defined  [name-defined]
+Found 41 errors in 1 file (checked 3 source files)

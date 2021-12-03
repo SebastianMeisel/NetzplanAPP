@@ -3,16 +3,203 @@ import csv                                # für CVS-Import
 import re
 from openpyxl import load_workbook        # für Excel-Import
 from openpyxl.utils import get_column_letter # Spalten-Namen in Excel
+from typing import List, Dict
 
 # Netzplan berechnen und zeichnen
 version = 0.1
 
+#######################################################################################
+# Projekt-Objekt
+
+class Projekt(object):
+
+    # Konstruktor
+    def __init__(self, ID: int, Bezeichnung: str):
+        self.ID = ID
+        self.Bezeichnung = Bezeichnung
+        ##############
+        self.ArbeitsPakete: Dict[str, ArbeitsPaket] = {}
+        self.KritischerPfad: List[str] = []
+        self.AP_ID = 0 # Arbeitspacket-Identifier automatisch hochzählen
+        self.Ressourcen: Dict[str, Ressource] = {}
+        
+    # Arbeitspaket hinzufügen
+    def NeuesArbeitsPaket(self, Bezeichnung: str, PT: int, ID=None):
+        self.AP_ID += 1
+        AP = ArbeitsPaket(ID if ID else self.AP_ID, Bezeichnung, PT, self)
+        self.ArbeitsPakete[str(AP.ID)] = AP
+
+    # Ressource hinzufügen
+    def NeueRessource(self, ID:str, Name:str):
+        R = Ressource(Name, self)
+        self.Ressourcen[ID] = R 
+
+    # Ressource zuweisen
+    def RessourceZuweisen(self, RessourcenID: str, ArbeitsPaketID: str, Kapazität = 100):
+        self.Ressourcen[RessourcenID].NeuesArbeitsPaket(ArbeitsPaketID, Kapazität)
+        
+    # Arbeispaketlist als CSV importieren
+    def ImportiereArbeitsPaketListeVonCSV(self, Dateiname:str):
+        with open(Dateiname, newline='') as csvfile:
+            CSV = csv.DictReader(csvfile, delimiter=';', quotechar='"')
+            for Zeile in CSV: 
+                self.NeuesArbeitsPaket(Zeile["Beschreibung"], int(Zeile["Dauer"]), Zeile["ID"])
+                Folgt = re.sub(r'\s+','', Zeile["Folgt"]).split(",")
+                print(Folgt)
+                if len(Folgt) == 1 and not Folgt[0] == '': 
+                    self.ArbeitsPakete[Zeile["ID"]].Folgt(Zeile["Folgt"])
+                elif Folgt[0] != '':
+                    self.ArbeitsPakete[Zeile["ID"]].Folgt(Folgt)
+    
+    # Ressourcen als CSV importieren
+    def ImportiereRessourcenVonCSV(self, Dateiname:str):
+        with open(Dateiname, newline='') as csvfile:
+            CSV = csv.DictReader(csvfile, delimiter=';', quotechar='"')
+            for Zeile in CSV:
+                R_ID=Zeile["ID"]
+                Name="{VN} {NN}".format(VN=Zeile["Vorname"], NN=Zeile["Nachname"])
+                self.NeueRessource(R_ID,Name)
+                for AP in Zeile["Arbeitspakete"].split(','):
+                    ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
+                    AP_ID = ID_K[0]         # ID 
+                    K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
+                    self.RessourceZuweisen(R_ID,AP_ID,K)
+
+    # Projekt aus Excel importieren
+    def ImportiereVonExcel(self, Dateiname:str) -> str:
+        Workbook =  load_workbook(filename=Dateiname)
+        def SpaltenVonTabelle(Tabelle):
+            return {
+                cell.value: {
+                    'Buchstabe': get_column_letter(cell.column),
+                    'Nummer': cell.column - 1
+                } for cell in Tabelle[1] if cell.value
+            }
+        # Projekt 
+        if "Projekt" not in Workbook.sheetnames: # Tabelle Projekt darf NICHT fehlen!
+            return "Tabelle 'Projekt' fehlt oder hat den falschen Namen."
+        
+        Tabelle = Workbook["Projekt"]                # Tabelle einlesen
+        Spalten = SpaltenVonTabelle(Tabelle) or []   # Spalten einlesen
+
+        # Pflichtspalten überprüfen
+        for Spalte in ["ID", "Beschreibung", "Dauer", "Folgt"]:
+             if not Spalte in Spalten:
+                 return f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
+        
+        for AP,row in enumerate(Tabelle.rows):
+            if AP > 0:
+                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or ''
+                if not type(ID) == str: ID = str(ID)  
+                Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value 
+                Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value 
+                if Dauer == 0: # Dauer darf nicht 0 sein.
+                    if Beschreibung == '': # leere Zeile
+                        break              # Verarbeitung der Tabelle beenden
+                    return f'Dauer für {Beschreibung} ({ID}) ist nicht gesetz!' 
+                Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
+                # Leerzeichen entfernen und Int in String umwandeln
+                Folgt = Folgt.replace(' ','') if type(Folgt) == str else str(Folgt)
+                #
+                self.NeuesArbeitsPaket(Beschreibung, int(Dauer), ID)
+                # Vorgänger in Liste aufteilen
+                if len(Folgt.split(",")) == 1 and not Folgt.split(",")[0] == '':
+                    # Überprüfen ob Vorgänger existiert, sonst Fehler melden
+                    if Folgt in self.ArbeitsPakete:
+                        self.ArbeitsPakete[ID].Folgt(Folgt)
+                    else:
+                            return f"ID {Folgt} wird in der Tabelle Projekt als Vorgänger genannt. Sie existiert aber nicht."
+                elif Folgt.split(",")[0] != '':
+                    for Vorgänger in Folgt.split(","):
+                        # Überprüfen ob Vorgänger existiert, sonst Fehler melden
+                        if Vorgänger in self.ArbeitsPakete:
+                            self.ArbeitsPakete[ID].Folgt(Vorgänger)
+                        else:
+                            return f"ID {Vorgänger} wird in der Tabelle Projekt als Vorgänger genannt. Sie existiert aber nicht."
+                        
+        # Ressourcen
+        if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
+            Tabelle = Workbook["Ressourcen"] 
+            Spalten = SpaltenVonTabelle(Tabelle) if type(Tabelle) is not None else []
+
+            # Pflichtspalten überprüfen
+            for Spalte in ["ID", "Vorname", "Nachname", "Arbeitspakete"]:
+                if not Spalte in Spalten:
+                    return f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
+
+            for R,row in enumerate(Tabelle.rows):
+                if R > 0:
+                    R_ID = Tabelle[Spalten['ID']['Buchstabe']][R].value or ''
+                    Name = "{VN} {NN}".format(VN=Tabelle[Spalten['Vorname']['Buchstabe']][R].value,
+                                              NN=Tabelle[Spalten['Nachname']['Buchstabe']][R].value) or ''
+                    self.NeueRessource(R_ID,Name)
+                    Zeilen: str
+                    Zeilen = Tabelle[Spalten['Arbeitspakete']['Buchstabe']][R].value or ''
+                    Zeile: str
+                    for Zeile in Zeilen.split(","):
+                        Zeile=Zeile.replace(' ','') # Leerzeichen entfernen
+                        ID_K = Zeile.split(":", 1) # in ID und Kapazität aufspalten
+                        AP_ID = ID_K[0]         # Arbeitspacket-ID 
+                        K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
+                        self.RessourceZuweisen(R_ID,AP_ID,K)
+        return "" 
+
+    # Vorwärts- und rückwarts-rechnen
+    def DurchRechnen(self):
+        #Hilfsfunktionen
+        def VorwärtsRechnen(AP: ArbeitsPaket):
+            AP.getFXZ()
+            for NF in AP.Nachfolger:
+                VorwärtsRechnen(NF[0])
+        def RückwärtsRechnen(AP: ArbeitsPaket):
+            AP.getSXZ()
+            if AP.GP == 0 and not AP.ID in self.KritischerPfad:
+                self.KritischerPfad.append(AP.ID)
+            for VG in AP.Vorgänger:
+                for i,NF in enumerate(VG.Nachfolger):
+                    if type(NF[0]) is not tuple:
+                        if NF[0].ID == AP.ID:   
+                            VG.Nachfolger[i] = (AP, 1 if len(AP.Nachfolger) == 0 else max(t[-1] for t in AP.Nachfolger)+1) 
+                # Wenn Vorgänger noch nicht berechnet ist dort weitermachen
+                RückwärtsRechnen(VG)
+
+        # Kapazität je Arbeitspacket berechnen -> Dauer berechnen
+        for AP in list(self.ArbeitsPakete.values()):
+            PersonenKapazität: float
+            PersonenKapazität = 0  # Personen * Kapazität%
+            # Personen-Kapazität berechnen
+            for R in AP.Ressourcen:
+                PersonenKapazität += R.ArbeitsPakete[AP.ID] / 100
+            # Wenn keine Resourchen zugeordnet sind, dann mit einer Person, 100% rechnen
+            if PersonenKapazität == 0:
+                PersonenKapazität = 1
+            # Dauer = PersonenTage / PersonenKapazität
+            AP.Dauer = int(AP.PT / PersonenKapazität) + (AP.PT % PersonenKapazität>0) # Aufrunden 
+        # Vorwärts- und Rückwärtsrechnen
+        AP = list(self.ArbeitsPakete.values())[0]
+        VorwärtsRechnen(AP)
+        for ap in reversed(list(self.ArbeitsPakete.values())):
+            if len(ap.Nachfolger) == 0:
+                AP = ap
+                break
+        RückwärtsRechnen(AP)
+
+    # Kritischen Pfad ausgeben    
+    def ZeigeKritischenPfad(self):
+        self.DurchRechnen()
+        print("Kritischer Pfad: [ ", end="")
+        for i, AP_ID in enumerate(reversed(self.KritischerPfad)):
+            print(AP_ID, end=" ")
+            if i < len(self.KritischerPfad)-1:
+                print(" - ", end="")
+        print("]")
+
 ###############################################################
 # Arbeitspacket-Objekt
-class ArbeitsPacket(object):  
+class ArbeitsPaket(object):  
 
     # Konstruktor #############################################
-    def __init__(self, ID, Bezeichnung: str, PT: int, Projekt: object):
+    def __init__(self, ID, Bezeichnung: str, PT: int, Projekt: Projekt):
         self.ID = ID 
         self.Bezeichnung = Bezeichnung
         self.PT = PT # Personentage
@@ -25,21 +212,21 @@ class ArbeitsPacket(object):
         self.SEZ = 0 # Späteste Endzeit
         self.GP  = 0 # Gesamtpuffer
         self.FP  = 0 # Freier Puffer
-        self.Nachfolger = [] # Liste der Nachfolger
-        self.Vorgänger = [] # Liste der Vorgänger
+        self.Nachfolger: List[list] = [] # Liste der Nachfolger
+        self.Vorgänger: List[ArbeitsPaket] = [] # Liste der Vorgänger
         self.Knoten     = None # Knoten im Netzplan
-        self.Ressourcen = []
+        self.Ressourcen: List[Ressource] = []
 
     # Vorgänger hinzufügen
-    def Folgt(self, Vorgänger: str or list):
+    def Folgt(self, Vorgänger):
         # Unterscheide ob einzelnes Arbeitspacket oder Liste
         if type(Vorgänger) is list:
             for V in Vorgänger:
-                self.Vorgänger.append(self.Projekt.ArbeitsPackete[V])
-                self.Projekt.ArbeitsPackete[V].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen + Zähler für Nachfolger vorbereiten
+                self.Vorgänger.append(self.Projekt.ArbeitsPakete[V])
+                self.Projekt.ArbeitsPakete[V].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen + Zähler für Nachfolger vorbereiten
         else:
-            self.Vorgänger.append(self.Projekt.ArbeitsPackete[Vorgänger]) # Vorgänger hinzufügen
-            self.Projekt.ArbeitsPackete[Vorgänger].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen
+            self.Vorgänger.append(self.Projekt.ArbeitsPakete[Vorgänger]) # Vorgänger hinzufügen
+            self.Projekt.ArbeitsPakete[Vorgänger].Nachfolger.append([self, 1]) # Zum Vorgänger als Nachfolger hinzufügen
 
     # Früheste Anfangs- und Endzeit bestimmen    
     def getFXZ(self):
@@ -74,189 +261,17 @@ class ArbeitsPacket(object):
 
 class Ressource(object):
     # Konstrukor
-    def __init__(self, Name:str, Projekt:object):
+    def __init__(self, Name:str, Projekt:Projekt):
         self.Name = Name
         self.Projekt = Projekt # Projekt zuordnen
         #################
-        self.ArbeitsPackete = {} # Arbeitspackete und Kapazität, die der Ressource zugeordnet werden
+        self.ArbeitsPakete: Dict[ArbeitsPaket, int] = {} # Arbeitspackete und Kapazität, die der Ressource zugeordnet werden
 
-    def NeuesArbeitsPacket(self, AP: str, Kapazität=100):
-        self.ArbeitsPackete[self.Projekt.ArbeitsPackete[AP].ID] = Kapazität
-        self.Projekt.ArbeitsPackete[AP].Ressourcen.append(self)
+    def NeuesArbeitsPaket(self, AP: str, Kapazität=100):
+        self.ArbeitsPakete[self.Projekt.ArbeitsPakete[AP].ID] = Kapazität
+        self.Projekt.ArbeitsPakete[AP].Ressourcen.append(self)
         
         
-#######################################################################################
-# Projekt-Objekt
-
-class Projekt(object):
-
-    # Konstruktor
-    def __init__(self, ID: int, Bezeichnung: str):
-        self.ID = ID
-        self.Bezeichnung = Bezeichnung
-        ##############
-        self.ArbeitsPackete = {}
-        self.KritischerPfad = []
-        self.AP_ID = 0 # Arbeitspacket-Identifier automatisch hochzählen
-        self.Ressourcen = {}
-        
-    # Arbeitspaket hinzufügen
-    def NeuesArbeitsPacket(self, Bezeichnung: str, PT: int, ID=None):
-        self.AP_ID += 1
-        AP = ArbeitsPacket(ID if ID else self.AP_ID, Bezeichnung, PT, self)
-        self.ArbeitsPackete[str(AP.ID)] = AP
-
-    # Ressource hinzufügen
-    def NeueRessource(self, ID:str, Name:str):
-        R = Ressource(Name, self)
-        self.Ressourcen[ID] = R 
-
-    # Ressource zuweisen
-    def RessourceZuweisen(self, RessourcenID: str, ArbeitsPacketID: str, Kapazität = 100):
-        self.Ressourcen[RessourcenID].NeuesArbeitsPacket(ArbeitsPacketID, Kapazität)
-        
-    # Arbeispaketlist als CSV importieren
-    def ImportiereArbeitsPacketListeVonCSV(self, Dateiname:str):
-        with open(Dateiname, newline='') as csvfile:
-            CSV = csv.DictReader(csvfile, delimiter=';', quotechar='"')
-            for Zeile in CSV: 
-                self.NeuesArbeitsPacket(Zeile["Beschreibung"], int(Zeile["Dauer"]), Zeile["ID"])
-                Folgt = Zeile["Folgt"].split(",")
-                re.sub(r'\s+','', Folgt) # Leerzeichen entfernen
-                if len(Folgt) == 1 and not Folgt[0] == '': 
-                    self.ArbeitsPackete[Zeile["ID"]].Folgt(Zeile["Folgt"])
-                elif Folgt[0] != '':
-                    self.ArbeitsPackete[Zeile["ID"]].Folgt(Folgt)
-    
-    # Ressourcen als CSV importieren
-    def ImportiereRessourcenVonCSV(self, Dateiname:str):
-        with open(Dateiname, newline='') as csvfile:
-            CSV = csv.DictReader(csvfile, delimiter=';', quotechar='"')
-            for Zeile in CSV:
-                R_ID=Zeile["ID"]
-                Name="{VN} {NN}".format(VN=Zeile["Vorname"], NN=Zeile["Nachname"])
-                self.NeueRessource(R_ID,Name)
-                for AP in Zeile["Arbeitspakete"].split(','):
-                    ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
-                    AP_ID = ID_K[0]         # ID 
-                    K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
-                    self.RessourceZuweisen(R_ID,AP_ID,K)
-
-    # Projekt aus Excel importieren
-    def ImportiereVonExcel(self, Dateiname:str):
-        Workbook =  load_workbook(filename=Dateiname)
-        def SpaltenVonTabelle(Tabelle):
-            return {
-                cell.value: {
-                    'Buchstabe': get_column_letter(cell.column),
-                    'Nummer': cell.column - 1
-                } for cell in Tabelle[1] if cell.value
-            }
-        # Projekt 
-        if "Projekt" not in Workbook.sheetnames: # Tabelle Projekt darf NICHT fehlen!
-            return "Tabelle 'Projekt' fehlt oder hat den falschen Namen."
-        
-        Tabelle = Workbook["Projekt"]                # Tabelle einlesen
-        Spalten = SpaltenVonTabelle(Tabelle) or []   # Spalten einlesen
-
-        # Pflichtspalten überprüfen
-        for Spalte in ["Beschreibung", "Dauer", "Folgt"]:
-             if not Spalte in Spalten:
-                 return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
-        
-        for AP,row in enumerate(Tabelle.rows):
-            if AP > 0:
-                self.AP_ID += 1
-                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(self.AP_ID)
-                Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value or ''
-                Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value or 0
-                if Dauer == 0: # Dauer darf nicht 0 sein.
-                    if Beschreibung == '': # leere Zeile
-                        break              # Verarbeitung der Tabelle beenden
-                    return f'Dauer für {Beschreibung} ({ID}) ist nicht gesetz!' 
-                Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
-                Folgt=Folgt.replace(' ','') # Leerzeichen entfernen
-                #
-                self.NeuesArbeitsPacket(Beschreibung, int(Dauer), ID)
-                # Vorgänger in Liste aufteilen
-                if len(Folgt.split(",")) == 1 and not Folgt.split(",")[0] == '':
-                    self.ArbeitsPackete[ID].Folgt(Folgt)
-                elif Folgt.split(",")[0] != '':
-                    for Vorgänger in Folgt.split(","):
-                        self.ArbeitsPackete[ID].Folgt(Vorgänger)
-        # Ressourcen
-        if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
-            Tabelle = Workbook["Ressourcen"] 
-            Spalten = SpaltenVonTabelle(Tabelle) if type(Tabelle) is not None else []
-
-            # Pflichtspalten überprüfen
-            for Spalte in ["ID", "Vorname", "Nachname", "Arbeitspakete"]:
-                if not Spalte in Spalten:
-                    return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
-
-            for R,row in enumerate(Tabelle.rows):
-                if R > 0:
-                    R_ID = Tabelle[Spalten['ID']['Buchstabe']][R].value or ''
-                    Name = "{VN} {NN}".format(VN=Tabelle[Spalten['Vorname']['Buchstabe']][R].value,
-                                              NN=Tabelle[Spalten['Nachname']['Buchstabe']][R].value) or ''
-                    self.NeueRessource(R_ID,Name)
-                    APs = Tabelle[Spalten['Arbeitspakete']['Buchstabe']][R].value or ''
-                    for AP in APs.split(","):
-                        AP=AP.replace(' ','') # Leerzeichen entfernen
-                        ID_K = AP.split(":", 1) # in ID und Kapazität aufspalten
-                        AP_ID = ID_K[0]         # Arbeitspacket-ID 
-                        K = 100 if len(ID_K) == 1 else int(ID_K[1]) # Kapazität
-                        self.RessourceZuweisen(R_ID,AP_ID,K)
-        return "" 
-
-    # Vorwärts- und rückwarts-rechnen
-    def DurchRechnen(self):
-        #Hilfsfunktionen
-        def VorwärtsRechnen(AP: object) -> object:
-            AP.getFXZ()
-            for NF in AP.Nachfolger:
-                VorwärtsRechnen(NF[0])
-        def RückwärtsRechnen(AP: object):
-            AP.getSXZ()
-            if AP.GP == 0 and not AP.ID in self.KritischerPfad:
-                self.KritischerPfad.append(AP.ID)
-            for VG in AP.Vorgänger:
-                for i,NF in enumerate(VG.Nachfolger):
-                    if type(NF[0]) is not tuple:
-                        if NF[0].ID == AP.ID:   
-                            VG.Nachfolger[i] = (AP, 1 if len(AP.Nachfolger) == 0 else max(t[-1] for t in AP.Nachfolger)+1) 
-                # Wenn Vorgänger noch nicht berechnet ist dort weitermachen
-                RückwärtsRechnen(VG)
-
-        # Kapazität je Arbeitspacket berechnen -> Dauer berechnen
-        for AP in list(self.ArbeitsPackete.values()):
-            PersonenKapazität = 0  # Personen * Kapazität%
-            # Personen-Kapazität berechnen
-            for R in AP.Ressourcen:
-                PersonenKapazität += R.ArbeitsPackete[AP.ID] / 100
-            # Wenn keine Resourchen zugeordnet sind, dann mit einer Person, 100% rechnen
-            if PersonenKapazität == 0:
-                PersonenKapazität = 1
-            # Dauer = PersonenTage / PersonenKapazität
-            AP.Dauer = int(AP.PT / PersonenKapazität) + (AP.PT % PersonenKapazität>0) # Aufrunden 
-        # Vorwärts- und Rückwärtsrechnen
-        AP = list(self.ArbeitsPackete.values())[0]
-        VorwärtsRechnen(AP)
-        for ap in reversed(list(self.ArbeitsPackete.values())):
-            if len(ap.Nachfolger) == 0:
-                AP = ap
-                break
-        RückwärtsRechnen(AP)
-
-    # Kritischen Pfad ausgeben    
-    def ZeigeKritischenPfad(self):
-        self.DurchRechnen()
-        print("Kritischer Pfad: [ ", end="")
-        for i, AP_ID in enumerate(reversed(self.KritischerPfad)):
-            print(AP_ID, end=" ")
-            if i < len(self.KritischerPfad)-1:
-                print(" - ", end="")
-        print("]")
 
 ####################################################################       
 # Netzplan-Object 
@@ -279,27 +294,27 @@ class Netzplan(object):
         # Zeichnung um Netzplan aufzunehmen
         self.Zeichnung = ImageDraw.Draw(self.a4image)
         # Listen: Knoten Raster
-        self.Knoten = [] # Knoten auf der Zeichnung
-        self.Raster = [] # Liste der Belegten Positionen im Raster um Überschneidungen zu vermeiden
+        self.Knoten: List[int]= [] # Knoten auf der Zeichnung
+        self.Raster: List[str] = [] # Liste der Belegten Positionen im Raster um Überschneidungen zu vermeiden
 
     # Knoten hinzufügen    
-    def NeuerKnoten(self, x: int, y:int, AP: object):    
+    def NeuerKnoten(self, x: float, y:float, AP: ArbeitsPaket):    
         # Knoten-Objekt …
-        K = Knoten(AP.ID, x, y, AP, self.Zeichnung)    # … anlegen
+        K: Knoten = Knoten(AP.ID, x, y, AP, self.Zeichnung)    # … anlegen
         K.Zeichnen()                                   # … zeichnen
         self.Knoten.append(K.ID)                       # … (ID) in Knoten-Liste des Netzplans eintragen
         self.Raster.append(str(x)+str(y))
-        AP.Knoten = K                                  # … dem ArbeitsPacket zuordnen
+        AP.Knoten = K                                  # … dem ArbeitsPaket zuordnen
         
     # Netzplan zeichnen    
-    def Zeichnen(self, Projekt: object):
+    def Zeichnen(self, Projekt: Projekt):
         x = .5
         y = .5        
         Projekt.DurchRechnen()
-        AP = list(Projekt.ArbeitsPackete.values())[0]
+        AP: ArbeitsPaket = list(Projekt.ArbeitsPakete.values())[0]
         self.NeuerKnoten(x,y, AP) 
         # Hilfsfunktion
-        def NachfolgerZeichnen(x: int, y: int, AP: object):
+        def NachfolgerZeichnen(x: float, y: float, AP: ArbeitsPaket):
             x += 1
             # Wenn Rasterpunkt belegt, dann neue Zeile anfangen.
             for NF in reversed(sorted(AP.Nachfolger, key=lambda liste: liste[-1])) :
@@ -379,19 +394,19 @@ class Netzplan(object):
         self.Zeichnung.text((x,y),"Projekt: {Name:<60}".format(Name=Projekt.Bezeichnung), (0,0,0), font=self.heading_font)
         y += 40
         self.Zeichnung.text((x,y),"ID {A:<6}: {B:<25}: {C:^7}: {D:<40}".format(A="", B="Bezeichnung", C="Dauer", D=R), (0,0,0), font=self.bold_font)
-        for AP in list(Projekt.ArbeitsPackete.values()):
+        for AP in list(Projekt.ArbeitsPakete.values()):
             y += 30
             # Ressourcen checken
             Ressourcen = ""
             i = 0 # zähle Ressourcen des Arbeitspackets
             for R in list(Projekt.Ressourcen.values()):
-                if str(AP.ID) in R.ArbeitsPackete.keys():
+                if str(AP.ID) in R.ArbeitsPakete.keys():
                     i += 1
                     if i > 1:
                         Ressourcen += ', '
                     Ressourcen += R.Name
-                    if R.ArbeitsPackete[str(AP.ID)] != 100:
-                        Ressourcen += "("+str(R.ArbeitsPackete[str(AP.ID)])+"%)"
+                    if R.ArbeitsPakete[str(AP.ID)] != 100:
+                        Ressourcen += "("+str(R.ArbeitsPakete[str(AP.ID)])+"%)"
             self.Zeichnung.text((x,y),"AP {ID:<6}: {Bezeichnung:<25}: {Dauer:7}: {Ressourcen:<40} ".format(ID=AP.ID, Bezeichnung=AP.Bezeichnung, Dauer=AP.Dauer, Ressourcen=Ressourcen), (0,0,0), font=self.font)
                     
         
@@ -423,7 +438,7 @@ class Legende(object):
 #################################################################
 # Knoten-Object
 class Knoten(object):
-    def __init__(self, ID: int, x: int, y: int, AP: object, Zeichnung: object):
+    def __init__(self, ID: int, x: float, y: float, AP: ArbeitsPaket, Zeichnung: object):
         self.ID = ID # ID des Knotens
         self.x = x   # X im Knotenraster
         self.y = y   # Y im Knotenraster

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import os                                                             # Zum Speichern
+import os# Zum Speichern
+from os.path import join, dirname, realpath
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory  # Webserver
 from werkzeug.utils import secure_filename                            # Begrenze erlaubte Dateien 
 from netzplan.netzplan import Projekt, Netzplan                                # Generiere Netzplan
@@ -13,7 +14,7 @@ def create_app(test_config=None):
     # Konfiguration
     app.config.from_mapping(
             SECRET_KEY='dev', 
-            UPLOAD_FOLDER = "./static/file/uploads" # Upload-Ordner für Datei-Upload
+            UPLOAD_FOLDER = join(dirname(realpath(__file__)),"./static/file/uploads") # Upload-Ordner für Datei-Upload
     )
 
     if test_config is None:
