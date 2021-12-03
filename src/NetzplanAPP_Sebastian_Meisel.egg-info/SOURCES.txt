@@ -4,6 +4,7 @@ pyproject.toml
 setup.cfg
 setup.py
 src/NetzplanAPP/__init__.py
+src/NetzplanAPP/py.typed
 src/NetzplanAPP_Sebastian_Meisel.egg-info/PKG-INFO
 src/NetzplanAPP_Sebastian_Meisel.egg-info/SOURCES.txt
 src/NetzplanAPP_Sebastian_Meisel.egg-info/dependency_links.txt
