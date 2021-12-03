@@ -16,52 +16,28 @@ def send_xlsx(client, Pfad: str):
     with open(Pfad, 'rb') as file:
         return client.post('/', data=dict(file=(file, file.name)), follow_redirects=True, content_type='multipart/form-data')
 
-
+@pytest.mark.parametrize("datei,expected", [
+    ("Projekt.xlsx", 'Netzplan-Download'),
+    ("Projekt_Ohne_Ressourcen.xlsx", 'Netzplan-Download'),
+    ("Projekt_Ohne_Ressourcen_und_ID_num.xlsx", 'Netzplan-Download'),
+    ("Projekt_Ohne_Ressourcen_und_ID.xlsx", 'Spalte &#39;ID&#39; fehlt in der Tabelle &#39;Projekt&#39;!'),
+    ("Projekt_Ohne_Ressourcen_und_ID_Dauer.xlsx", 'Spalte &#39;ID&#39; fehlt in der Tabelle &#39;Projekt&#39;!'),
+    ("Projekt_Ohne_Projekt.xlsx", 'Tabelle &#39;Projekt&#39; fehlt oder hat den falschen Namen'),
+    ("Ressourcen_Ohne_ID.xlsx", 'Spalte &#39;ID&#39; fehlt in der Tabelle &#39;Ressourcen&#39;!'),
+])
     
 
-def test_send_xlsx(client):
+def test_send_xlsx(client, datei, expected):
 
     # Ordentliche Testdatei
-    Pfad = join(dirname(realpath(__file__)),"Projekt.xlsx")
+    Pfad = join(dirname(realpath(__file__)), datei)
     rv = send_xlsx(client, Pfad)
-    assert b'Netzplan-Download' in rv.data
-
-    # Ordentliche Testdatei ohne Ressourcen
-    Pfad = join(dirname(realpath(__file__)),"Projekt_Ohne_Ressourcen.xlsx")
-    rv = send_xlsx(client, Pfad)
-    assert b'Netzplan-Download' in rv.data
-
-    #  Testdatei ohne Ressourcen und ID - korrekte (numerische) Verweise
-    Pfad = join(dirname(realpath(__file__)),"Projekt_Ohne_Ressourcen_und_ID_korr.xlsx")
-    rv = send_xlsx(client, Pfad)
-    assert b'Netzplan-Download' in rv.data
+    assert expected in rv.data.decode('utf-8')
 
     
-    #  Testdatei ohne Ressourcen und ID - falsche Verweise
-    Pfad = join(dirname(realpath(__file__)),"Projekt_Ohne_Ressourcen_und_ID.xlsx")
-    rv = send_xlsx(client, Pfad)
-    assert b'Spalte &#39;ID&#39; fehlt in der Tabelle &#39;Projekt&#39;!' in rv.data
-
-    # Testdatei ohne Ressourcen und ID
-    Pfad = join(dirname(realpath(__file__)),"Projekt_Ohne_Ressourcen_und_ID_Dauer.xlsx")
-    rv = send_xlsx(client, Pfad)
-    assert b'Spalte &#39;ID&#39; fehlt in der Tabelle &#39;Projekt&#39;!' in rv.data
-
-    # Testdatei ohne Projekt-Tabelle
-    Pfad = join(dirname(realpath(__file__)),"Projekt_Ohne_Projekt.xlsx")
-    rv = send_xlsx(client, Pfad)
-    assert b'Tabelle &#39;Projekt&#39; fehlt oder hat den falschen Namen' in rv.data
-
-
-    # Testdatei ohne Ressourcen-ID
-    Pfad = join(dirname(realpath(__file__)),"Ressourcen_Ohne_ID.xlsx")
-    rv = send_xlsx(client, Pfad)
-    assert b'Spalte &#39;ID&#39; fehlt in der Tabelle &#39;Ressourcen&#39;!' in rv.data
-
-    
-
+def test_keine_datei(client):
     # keine Datei
     rv = client.post('/', data=dict(file=''), follow_redirects=True, content_type='multipart/form-data')
 
-    assert 'Keine Datei gewÃ¤hlt' in rv.data.decode('utf-8') # "Keine Datei gewählt"
+    assert 'Keine Datei gewählt' in rv.data.decode('utf-8') # "Keine Datei gewählt"
     
