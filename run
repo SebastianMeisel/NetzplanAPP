@@ -1,0 +1,7 @@
+#!/bin/bash
+# Setze FLASK_APP und starte flask
+
+export FLASK_APP=NetzplanAPP
+export FLASK_ENV=development
+
+flask run

@@ -83,30 +83,40 @@ class Projekt(object):
         Spalten = SpaltenVonTabelle(Tabelle) or []   # Spalten einlesen
 
         # Pflichtspalten überprüfen
-        for Spalte in ["Beschreibung", "Dauer", "Folgt"]:
+        for Spalte in ["ID", "Beschreibung", "Dauer", "Folgt"]:
              if not Spalte in Spalten:
-                 return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
+                 return f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
         
         for AP,row in enumerate(Tabelle.rows):
             if AP > 0:
-                self.AP_ID += 1
-                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or str(self.AP_ID)
-                Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value or ''
-                Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value or 0
+                ID = Tabelle[Spalten['ID']['Buchstabe']][AP].value or ''
+                if not type(ID) == str: ID = str(ID)  
+                Beschreibung = Tabelle[Spalten['Beschreibung']['Buchstabe']][AP].value 
+                Dauer = Tabelle[Spalten['Dauer']['Buchstabe']][AP].value 
                 if Dauer == 0: # Dauer darf nicht 0 sein.
                     if Beschreibung == '': # leere Zeile
                         break              # Verarbeitung der Tabelle beenden
                     return f'Dauer für {Beschreibung} ({ID}) ist nicht gesetz!' 
                 Folgt = Tabelle[Spalten['Folgt']['Buchstabe']][AP].value or ''
-                Folgt=Folgt.replace(' ','') # Leerzeichen entfernen
+                # Leerzeichen entfernen und Int in String umwandeln
+                Folgt = Folgt.replace(' ','') if type(Folgt) == str else str(Folgt)
                 #
                 self.NeuesArbeitsPaket(Beschreibung, int(Dauer), ID)
                 # Vorgänger in Liste aufteilen
                 if len(Folgt.split(",")) == 1 and not Folgt.split(",")[0] == '':
-                    self.ArbeitsPakete[ID].Folgt(Folgt)
+                    # Überprüfen ob Vorgänger existiert, sonst Fehler melden
+                    if Folgt in self.ArbeitsPakete:
+                        self.ArbeitsPakete[ID].Folgt(Folgt)
+                    else:
+                            return f"ID {Folgt} wird in der Tabelle Projekt als Vorgänger genannt. Sie existiert aber nicht."
                 elif Folgt.split(",")[0] != '':
                     for Vorgänger in Folgt.split(","):
-                        self.ArbeitsPakete[ID].Folgt(Vorgänger)
+                        # Überprüfen ob Vorgänger existiert, sonst Fehler melden
+                        if Vorgänger in self.ArbeitsPakete:
+                            self.ArbeitsPakete[ID].Folgt(Vorgänger)
+                        else:
+                            return f"ID {Vorgänger} wird in der Tabelle Projekt als Vorgänger genannt. Sie existiert aber nicht."
+                        
         # Ressourcen
         if "Ressourcen" in Workbook.sheetnames: # Tabelle Ressourcen darf fehlen
             Tabelle = Workbook["Ressourcen"] 
@@ -115,7 +125,7 @@ class Projekt(object):
             # Pflichtspalten überprüfen
             for Spalte in ["ID", "Vorname", "Nachname", "Arbeitspakete"]:
                 if not Spalte in Spalten:
-                    return f"Spalte '{Spalte}' fehlt in der Tabelle 'Projekt'!"
+                    return f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
 
             for R,row in enumerate(Tabelle.rows):
                 if R > 0:
