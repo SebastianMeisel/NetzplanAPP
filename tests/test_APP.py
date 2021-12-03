@@ -5,7 +5,7 @@ from NetzplanAPP import create_app
 from os.path import join, dirname, realpath
 import html
 
-
+# Client einrichten
 @pytest.fixture
 def client():
     app = create_app({'TESTING': True})
@@ -14,6 +14,7 @@ def client():
         yield client
 
 
+# Hilfsfunktion        
 def send_xlsx(client, Pfad: str):
     with open(Pfad, 'rb') as file:
         return client.post('/', data=dict(file=(file, file.name)), follow_redirects=True, content_type='multipart/form-data')
