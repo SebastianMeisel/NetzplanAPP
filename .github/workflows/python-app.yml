@@ -28,4 +28,4 @@ jobs:
     - name: Test with pytest
       run: |
         if [ -f requirements_dev.txt ]; then pipenv install -r requirements_dev.txt; fi
-        pytest
+        pipenv run pytest
