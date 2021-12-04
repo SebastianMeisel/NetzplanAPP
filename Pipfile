@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+netzplanapp-sebastian-meisel = {editable = true, path = "."}
+openpyxl = "==3.0.9"
+Flask = "==2.0.2"
+Pillow = "==8.4.0"
+Werkzeug = "==2.0.2"
+flake8 = "==3.9.2"
+tox = "==3.24.3"
+pytest = "==6.2.5"
+pytest-cov = "==2.12.1"
+mypy = "==0.910"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
