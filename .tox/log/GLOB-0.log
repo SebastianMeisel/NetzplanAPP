@@ -1,6 +1,6 @@
 action: GLOB, msg: packaging
-cwd: /home/sebastian/git/NetzplanAPP
-cmd: /home/sebastian/git/NetzplanAPP/venv/bin/python3 setup.py sdist --formats=zip --dist-dir .tox/dist
+cwd: /mnt/c/Users/User/python3/NetzplanAPP
+cmd: /home/ostseepinguin/.local/share/virtualenvs/NetzplanAPP-D1gW2Gkf/bin/python setup.py sdist --formats=zip --dist-dir .tox/dist
 running sdist
 running egg_info
 writing src/NetzplanAPP_Sebastian_Meisel.egg-info/PKG-INFO
@@ -8,6 +8,7 @@ writing dependency_links to src/NetzplanAPP_Sebastian_Meisel.egg-info/dependency
 writing requirements to src/NetzplanAPP_Sebastian_Meisel.egg-info/requires.txt
 writing top-level names to src/NetzplanAPP_Sebastian_Meisel.egg-info/top_level.txt
 reading manifest file 'src/NetzplanAPP_Sebastian_Meisel.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
 writing manifest file 'src/NetzplanAPP_Sebastian_Meisel.egg-info/SOURCES.txt'
 running check
 creating NetzplanAPP-Sebastian-Meisel-0.0.1
@@ -22,30 +23,34 @@ copying pyproject.toml -> NetzplanAPP-Sebastian-Meisel-0.0.1
 copying setup.cfg -> NetzplanAPP-Sebastian-Meisel-0.0.1
 copying setup.py -> NetzplanAPP-Sebastian-Meisel-0.0.1
 copying src/NetzplanAPP/__init__.py -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP
+copying src/NetzplanAPP/py.typed -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP
 copying src/NetzplanAPP_Sebastian_Meisel.egg-info/PKG-INFO -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info
 copying src/NetzplanAPP_Sebastian_Meisel.egg-info/SOURCES.txt -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info
 copying src/NetzplanAPP_Sebastian_Meisel.egg-info/dependency_links.txt -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info
 copying src/NetzplanAPP_Sebastian_Meisel.egg-info/requires.txt -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info
 copying src/NetzplanAPP_Sebastian_Meisel.egg-info/top_level.txt -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info
+copying src/netzplan/__init__.py -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan
 copying src/netzplan/netzplan.py -> NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan
 Writing NetzplanAPP-Sebastian-Meisel-0.0.1/setup.cfg
 creating '.tox/dist/NetzplanAPP-Sebastian-Meisel-0.0.1.zip' and adding 'NetzplanAPP-Sebastian-Meisel-0.0.1' to it
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/LICENSE'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/pyproject.toml'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/PKG-INFO'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/setup.py'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/setup.cfg'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/pyproject.toml'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/README.md'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/setup.cfg'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/setup.py'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan/netzplan.py'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan/__init__.py'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP/py.typed'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP/__init__.py'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/dependency_links.txt'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/PKG-INFO'
+adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/requires.txt'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/SOURCES.txt'
 adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/top_level.txt'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/dependency_links.txt'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/requires.txt'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/NetzplanAPP_Sebastian_Meisel.egg-info/PKG-INFO'
-adding 'NetzplanAPP-Sebastian-Meisel-0.0.1/src/netzplan/netzplan.py'
 removing 'NetzplanAPP-Sebastian-Meisel-0.0.1' (and everything under it)

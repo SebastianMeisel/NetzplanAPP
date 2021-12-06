@@ -10,4 +10,5 @@ src/NetzplanAPP_Sebastian_Meisel.egg-info/SOURCES.txt
 src/NetzplanAPP_Sebastian_Meisel.egg-info/dependency_links.txt
 src/NetzplanAPP_Sebastian_Meisel.egg-info/requires.txt
 src/NetzplanAPP_Sebastian_Meisel.egg-info/top_level.txt
+src/netzplan/__init__.py
 src/netzplan/netzplan.py

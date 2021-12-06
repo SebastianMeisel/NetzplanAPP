@@ -4,4 +4,4 @@
 export FLASK_APP=NetzplanAPP
 export FLASK_ENV=development
 
-flask run
+pipenv run flask run
