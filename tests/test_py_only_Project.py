@@ -73,7 +73,7 @@ def test_project(capsys):
 
     # Generiere MD5-Hash
     sum = sha256sum("Netzplan.jpg")
-    assert sum == "c588730431ef036c3049e98042df675b6feb0ddc32b8723d0470bf792e9b9629"
+    assert sum == "6fd9f9b93a71a3512c0ab6368fa3ee5fc5a68c25b16ba7268d4daa356d4b409c"
 
     # Kristischen Pfad ausgeben
     P1.ZeigeKritischenPfad()
