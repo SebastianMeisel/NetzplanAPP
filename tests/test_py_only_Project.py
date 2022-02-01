@@ -9,8 +9,7 @@ def sha256sum(filename):
     mv = memoryview(b)
     with open(filename, "rb", buffering=0) as f:
         for n in iter(lambda: f.readinto(mv), 0):
-            if n > 2:
-                h.update(mv[:n])
+            h.update(mv[:n])
     return h.hexdigest()
 
 
