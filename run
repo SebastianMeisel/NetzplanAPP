@@ -2,6 +2,6 @@
 # Setze FLASK_APP und starte flask
 
 export FLASK_APP=NetzplanAPP
-export FLASK_ENV=development
+export FLASK_ENV=product
 
 pipenv run flask run

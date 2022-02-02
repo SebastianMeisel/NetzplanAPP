@@ -5,8 +5,20 @@ from openpyxl import load_workbook  # für Excel-Import
 from openpyxl.utils import get_column_letter  # Spalten-Namen in Excel
 from typing import List, Dict
 
+# Activate Logging
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler("netzplan.log")
+logger.addHandler(file_handler)
+stream_handler = logging.StreamHandler()
+logger.addHandler(stream_handler)
+
+
 # Netzplan berechnen und zeichnen
-version = 0.1
+version = 0.2
+
 
 #######################################################################################
 # Projekt-Objekt
@@ -84,6 +96,7 @@ class Projekt(object):
 
         # Projekt
         if "Projekt" not in Workbook.sheetnames:  # Tabelle Projekt darf NICHT fehlen!
+            logger.warning("Tabelle 'Projekt' fehlt oder hat den falschen Namen.")
             return "Tabelle 'Projekt' fehlt oder hat den falschen Namen."
 
         Tabelle = Workbook["Projekt"]  # Tabelle einlesen
@@ -92,6 +105,9 @@ class Projekt(object):
         # Pflichtspalten überprüfen
         for Spalte in ["ID", "Beschreibung", "Dauer", "Folgt"]:
             if not Spalte in Spalten:
+                logger.warning(
+                    f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
+                )
                 return f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
 
         for AP, row in enumerate(Tabelle.rows):
@@ -104,6 +120,7 @@ class Projekt(object):
                 if Dauer == 0:  # Dauer darf nicht 0 sein.
                     if Beschreibung == "":  # leere Zeile
                         break  # Verarbeitung der Tabelle beenden
+                    logger.warning(f"Dauer für ist nicht gesetz!")
                     return f"Dauer für {Beschreibung} ({ID}) ist nicht gesetz!"
                 Folgt = Tabelle[Spalten["Folgt"]["Buchstabe"]][AP].value or ""
                 # Leerzeichen entfernen und Int in String umwandeln
@@ -116,6 +133,7 @@ class Projekt(object):
                     if Folgt in self.ArbeitsPakete:
                         self.ArbeitsPakete[ID].Folgt(Folgt)
                     else:
+                        logger.warning(f"Vorgänger-ID existiert nicht.")
                         return f"ID {Folgt} wird in der Tabelle Projekt als Vorgänger genannt. Sie existiert aber nicht."
                 elif Folgt.split(",")[0] != "":
                     for Vorgänger in Folgt.split(","):
@@ -123,6 +141,7 @@ class Projekt(object):
                         if Vorgänger in self.ArbeitsPakete:
                             self.ArbeitsPakete[ID].Folgt(Vorgänger)
                         else:
+                            logger.warning(f"Vorgänger-ID existiert nicht.")
                             return f"ID {Vorgänger} wird in der Tabelle Projekt als Vorgänger genannt. Sie existiert aber nicht."
 
         # Ressourcen
@@ -133,6 +152,9 @@ class Projekt(object):
             # Pflichtspalten überprüfen
             for Spalte in ["ID", "Vorname", "Nachname", "Arbeitspakete"]:
                 if not Spalte in Spalten:
+                    logger.warning(
+                        f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
+                    )
                     return f"Spalte '{Spalte}' fehlt in der Tabelle '{Tabelle.title}'!"
 
             for R, row in enumerate(Tabelle.rows):
@@ -157,6 +179,7 @@ class Projekt(object):
                         AP_ID = ID_K[0]  # Arbeitspacket-ID
                         K = 100 if len(ID_K) == 1 else int(ID_K[1])  # Kapazität
                         self.RessourceZuweisen(R_ID, AP_ID, K)
+        logger.info("Import erfolgreich")
         return ""
 
     # Vorwärts- und rückwarts-rechnen

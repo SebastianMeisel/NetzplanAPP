@@ -12,6 +12,19 @@ from flask import (
 from werkzeug.utils import secure_filename  # Begrenze erlaubte Dateien
 from netzplan.netzplan import Projekt, Netzplan  # Generiere Netzplan
 
+# Activate Logging
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler("netzplan.log")
+logger.addHandler(file_handler)
+stream_handler = logging.StreamHandler()
+logger.addHandler(stream_handler)
+# werkzeug logger nur in Console
+werkzeug_logger = logging.getLogger("werkzeug")
+werkzeug_logger.addHandler(stream_handler)
+
 # Create an App
 def create_app(test_config=None):
     # Web-App initialisieren
@@ -54,12 +67,14 @@ def create_app(test_config=None):
         if request.method == "POST":
             # Überprüfe, ob Daei ausgewählt wurde
             if "file" not in request.files:
+                logger.warning("Keine Datei gewählt")
                 return render_template(
                     "index.html", error_message="Keine Datei gewählt"
                 )
             file = request.files["file"]
             # Dateiname darf kein leere String sein
             if file.filename == "":
+                logger.warning("Keine Datei gewählt")
                 return render_template(
                     "index.html", error_message="Keine Datei gewählt"
                 )
@@ -88,6 +103,7 @@ def create_app(test_config=None):
 
                 return render_template("netzplan.html")
             else:
+                logger.warning("Dateiname falsch")
                 return render_template(
                     "index.html", error_message="Bitte Dateinamen ändern!"
                 )
