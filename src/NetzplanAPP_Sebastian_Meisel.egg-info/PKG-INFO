@@ -5,9 +5,7 @@ Summary: Online-Tool: Netzplan zur Projektplanung
 Home-page: https://github.com/SebastianMeisel/NetzplanAPP
 Author: Sebastian Meisel
 Author-email: sebastian.meisel@gmail.com
-License: UNKNOWN
 Project-URL: Bug Tracker, https://github.com/SebastianMeisel/NetzplanAPP/issues
-Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: GNU General Public License (GPL)
 Classifier: Framework :: Flask
@@ -22,5 +20,3 @@ Nutzende haben die Möglichkeit eine Exceldatei mit Projektdaten hochzuladen, au
 ein Netzplan zur Projektplanung als PDF- und JPG-Datei erstellt wird.
 Es wird ein [Template](http://127.0.0.1:5000/static/file/downloads/Projekt.xltx) angeboten,
 um eine Excel-Datei zu erstellen, die von der App verarbeitet werden kann.
-
-

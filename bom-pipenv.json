@@ -1,0 +1,1152 @@
+{
+	"spdxVersion": "SPDX-2.2",
+	"dataLicense": "CC0-1.0",
+	"SPDXID": "SPDXRef-DOCUMENT",
+	"name": "attrs-21.4.0",
+	"documentNamespace": "http://spdx.org/spdxpackages/attrs-21.4.0-9cb83e22-847d-48a9-8851-eb8ace6c7f09",
+	"creationInfo": {
+		"created": "2022-09-28T17:32:13Z",
+		"creators": [
+			"Tool: spdx-sbom-generator-source-code"
+		]
+	},
+	"packages": [
+		{
+			"name": "attrs",
+			"SPDXID": "SPDXRef-Package-attrs-21.4.0",
+			"versionInfo": "21.4.0",
+			"supplier": "Person: Hynek Schlawack (hs@ox.cx)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/be/be/7abce643bfdf8ca01c48afa2ddf8308c2308b0c3b239a44e57d020afa0ef/attrs-21.4.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "2d27e3784d7a565d36ab851fe94887c5eccd6a463168875832a1be79c82828b4"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/attrs/21.4.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "backports.entry-points-selectable",
+			"SPDXID": "SPDXRef-Package-backports.entry-points-selectable-1.1.1",
+			"versionInfo": "1.1.1",
+			"supplier": "Person: Jason R. Coombs (jaraco@jaraco.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/6d/2e/a6789183415658c7f2c41da8599d53077bd222233039f5c92bffbf23b28d/backports.entry_points_selectable-1.1.1-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "7fceed9532a7aa2bd888654a7314f864a3c16a4e710b34a58cfc0f08114c663b"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/backports.entry-points-selectable/1.1.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "black",
+			"SPDXID": "SPDXRef-Package-black-22.1.0",
+			"versionInfo": "22.1.0",
+			"supplier": "Person: Łukasz Langa (lukasz@langa.pl)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/42/58/8a3443a5034685152270f9012a9d196c9f165791ed3f2777307708b15f6c/black-22.1.0.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "a7c0192d35635f6fc1174be575cb7915e92e5dd629ee79fdaf0dcfa41a80afb5"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/black/22.1.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "cfgv",
+			"SPDXID": "SPDXRef-Package-cfgv-3.3.1",
+			"versionInfo": "3.3.1",
+			"supplier": "Person: Anthony Sottile (asottile@umich.edu)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/6d/82/0a0ebd35bae9981dea55c06f8e6aaf44a49171ad798795c72c6f64cba4c2/cfgv-3.3.1-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "c6a0883f3917a037485059700b9e75da2464e6c27051014ad85ba6aaa5884426"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/cfgv/3.3.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "click",
+			"SPDXID": "SPDXRef-Package-click-8.0.3",
+			"versionInfo": "8.0.3",
+			"supplier": "Person: Armin Ronacher (armin.ronacher@active-4.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/48/58/c8aa6a8e62cc75f39fee1092c45d6b6ba684122697d7ce7d53f64f98a129/click-8.0.3-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "353f466495adaeb40b6b5f592f9f91cb22372351c84caeb068132442a4518ef3"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/click/8.0.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "coverage",
+			"SPDXID": "SPDXRef-Package-coverage-6.3",
+			"versionInfo": "6.3",
+			"supplier": "Person: Ned Batchelder and 148 others (ned@nedbatchelder.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/28/80/6b7d00e28bf676d2c9c5220313c5968ba601d45ca146fa314781fa1d5549/coverage-6.3.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "987a84ff98a309994ca77ed3cc4b92424f824278e48e4bf7d1bb79a63cfe2099"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/coverage/6.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "distlib",
+			"SPDXID": "SPDXRef-Package-distlib-0.3.4",
+			"versionInfo": "0.3.4",
+			"supplier": "Person: Vinay Sajip (vinay_sajip@red-dove.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/85/01/88529c93e41607f1a78c1e4b346b24c74ee43d2f41cfe33ecd2e20e0c7e3/distlib-0.3.4.zip",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "e4b58818180336dc9c529bfb9a0b58728ffc09ad92027a3f30b7cd91e3458579"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/distlib/0.3.4",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "et-xmlfile",
+			"SPDXID": "SPDXRef-Package-et-xmlfile-1.1.0",
+			"versionInfo": "1.1.0",
+			"supplier": "Person: See ATUHORS.txt (charlie.clark@clark-consulting.eu)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/96/c2/3dd434b0108730014f1b96fd286040dc3bcb70066346f7e01ec2ac95865f/et_xmlfile-1.1.0-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "a2ba85d1d6a74ef63837eed693bcb89c3f752169b0e3e7ae5b16ca5e1b3deada"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/et-xmlfile/1.1.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "filelock",
+			"SPDXID": "SPDXRef-Package-filelock-3.4.2",
+			"versionInfo": "3.4.2",
+			"supplier": "Person: Benedikt Schmitt (benedikt@benediktschmitt.de)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/ca/6c/ab2f79146ca546875e2a633d21e968acc17042ce88e4413b340541f0d4c5/filelock-3.4.2-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "cf0fc6a2f8d26bd900f19bf33915ca70ba4dd8c56903eeb14e1e7a2fd7590146"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/filelock/3.4.2",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "flake8",
+			"SPDXID": "SPDXRef-Package-flake8-3.9.2",
+			"versionInfo": "3.9.2",
+			"supplier": "Person: Tarek Ziade (tarek@ziade.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/fc/80/35a0716e5d5101e643404dabd20f07f5528a21f3ef4032d31a49c913237b/flake8-3.9.2-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/flake8/3.9.2",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "Flask",
+			"SPDXID": "SPDXRef-Package-Flask-2.0.2",
+			"versionInfo": "2.0.2",
+			"supplier": "Person: Armin Ronacher (armin.ronacher@active-4.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/8f/b6/b4fdcb6d01ee20f9cfe81dcf9d3cd6c2f874b996f186f1c0b898c4a59c04/Flask-2.0.2-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "cb90f62f1d8e4dc4621f52106613488b5ba826b2e1e10a33eac92f723093ab6a"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/Flask/2.0.2",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "identify",
+			"SPDXID": "SPDXRef-Package-identify-2.4.7",
+			"versionInfo": "2.4.7",
+			"supplier": "Person: Chris Kuehl (ckuehl@ocf.berkeley.edu)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/99/ea/d209b011b4fd3d8e920ed68f81cbef9531876d9c70c9fbd1e963af332650/identify-2.4.7-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "e64210654dfbca6ced33230eb1b137591a0981425e1a60b4c6c36309f787bbd5"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/identify/2.4.7",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "iniconfig",
+			"SPDXID": "SPDXRef-Package-iniconfig-1.1.1",
+			"versionInfo": "1.1.1",
+			"supplier": "Person: Ronny Pfannschmidt, Holger Krekel (opensource@ronnypfannschmidt.de, holger.krekel@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/9b/dd/b3c12c6d707058fa947864b67f0c4e0c39ef8610988d7baea9578f3c48f3/iniconfig-1.1.1-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/iniconfig/1.1.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "itsdangerous",
+			"SPDXID": "SPDXRef-Package-itsdangerous-2.0.1",
+			"versionInfo": "2.0.1",
+			"supplier": "Person: Armin Ronacher (armin.ronacher@active-4.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/9c/96/26f935afba9cd6140216da5add223a0c465b99d0f112b68a4ca426441019/itsdangerous-2.0.1-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "5174094b9637652bdb841a3029700391451bd092ba3db90600dea710ba28e97c"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/itsdangerous/2.0.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "Jinja2",
+			"SPDXID": "SPDXRef-Package-Jinja2-3.0.3",
+			"versionInfo": "3.0.3",
+			"supplier": "Person: Armin Ronacher (armin.ronacher@active-4.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/20/9a/e5d9ec41927401e41aea8af6d16e78b5e612bca4699d417f646a9610a076/Jinja2-3.0.3-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "077ce6014f7b40d03b47d1f1ca4b0fc8328a692bd284016f806ed0eaca390ad8"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/Jinja2/3.0.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "MarkupSafe",
+			"SPDXID": "SPDXRef-Package-MarkupSafe-2.0.1",
+			"versionInfo": "2.0.1",
+			"supplier": "Person: Armin Ronacher (armin.ronacher@active-4.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/68/ba/7a5ca0f9b4239e6fd846dd54c0b5928187355fa62fbdbd13e1c5942afae7/MarkupSafe-2.0.1-cp38-cp38-manylinux2010_x86_64.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "47ab1e7b91c098ab893b828deafa1203de86d0bc6ab587b160f78fe6c4011f75"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/MarkupSafe/2.0.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "mccabe",
+			"SPDXID": "SPDXRef-Package-mccabe-0.6.1",
+			"versionInfo": "0.6.1",
+			"supplier": "Person: Ian Cordasco (graffatcolmingov@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/87/89/479dc97e18549e21354893e4ee4ef36db1d237534982482c3681ee6e7b57/mccabe-0.6.1-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/mccabe/0.6.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "mypy",
+			"SPDXID": "SPDXRef-Package-mypy-0.910",
+			"versionInfo": "0.910",
+			"supplier": "Person: Jukka Lehtosalo (jukka.lehtosalo@iki.fi)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/11/02/5e68a38bdcda80f0707828b54ee1db06ebb27ed2d8e1055790a1e51c3373/mypy-0.910-cp38-cp38-manylinux2010_x86_64.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "866c41f28cee548475f146aa4d39a51cf3b6a84246969f3759cb3e9c742fc072"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/mypy/0.910",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "mypy-extensions",
+			"SPDXID": "SPDXRef-Package-mypy-extensions-0.4.3",
+			"versionInfo": "0.4.3",
+			"supplier": "Organization: The mypy developers (jukka.lehtosalo@iki.fi)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/5c/eb/975c7c080f3223a5cdaff09612f3a5221e4ba534f7039db34c35d95fa6a5/mypy_extensions-0.4.3-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/mypy-extensions/0.4.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "NetzplanAPP-Sebastian-Meisel",
+			"SPDXID": "SPDXRef-Package-NetzplanAPP-Sebastian-Meisel-0.0.1",
+			"versionInfo": "0.0.1",
+			"supplier": "Person: Sebastian Meisel (sebastian.meisel@gmail.com)",
+			"downloadLocation": "https://github.com/SebastianMeisel/NetzplanAPP",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA1",
+					"checksumValue": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+				}
+			],
+			"homepage": "https://github.com/SebastianMeisel/NetzplanAPP",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "nodeenv",
+			"SPDXID": "SPDXRef-Package-nodeenv-1.6.0",
+			"versionInfo": "1.6.0",
+			"supplier": "Person: Eugene Kalinin (e.v.kalinin@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/54/73/56c89b343befb9c63e8117294d265458f0ff726fa2abcdc6bb5ec5e66a1a/nodeenv-1.6.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "621e6b7076565ddcacd2db0294c0381e01fd28945ab36bcf00f41c5daf63bef7"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/nodeenv/1.6.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "openpyxl",
+			"SPDXID": "SPDXRef-Package-openpyxl-3.0.9",
+			"versionInfo": "3.0.9",
+			"supplier": "Person: See AUTHORS (charlie.clark@clark-consulting.eu)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/1c/a6/8ce4d2ef2c29be3235c08bb00e0b81e29d38ebc47d82b17af681bf662b74/openpyxl-3.0.9-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "8f3b11bd896a95468a4ab162fc4fcd260d46157155d1f8bfaabb99d88cfcf79f"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/openpyxl/3.0.9",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "packaging",
+			"SPDXID": "SPDXRef-Package-packaging-21.3",
+			"versionInfo": "21.3",
+			"supplier": "Person: Donald Stufft and individual contributors (donald@stufft.io)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/05/8e/8de486cbd03baba4deef4142bd643a3e7bbe954a784dc1bb17142572d127/packaging-21.3-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/packaging/21.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pathspec",
+			"SPDXID": "SPDXRef-Package-pathspec-0.9.0",
+			"versionInfo": "0.9.0",
+			"supplier": "Person: Caleb P. Burns (cpburnz@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/f6/33/436c5cb94e9f8902e59d1d544eb298b83c84b9ec37b5b769c5a0ad6edb19/pathspec-0.9.0.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pathspec/0.9.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "Pillow",
+			"SPDXID": "SPDXRef-Package-Pillow-9.0.0",
+			"versionInfo": "9.0.0",
+			"supplier": "Person: Alex Clark (PIL Fork Author) (aclark@python-pillow.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/b0/43/3e286c93b9fa20e233d53532cc419b5aad8a468d91065dbef4c846058834/Pillow-9.0.0.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "ee6e2963e92762923956fe5d3479b1fdc3b76c83f290aad131a2f98c3df0593e"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/Pillow/9.0.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pip",
+			"SPDXID": "SPDXRef-Package-pip-21.3.1",
+			"versionInfo": "21.3.1",
+			"supplier": "Organization: The pip developers (distutils-sig@python.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/a4/6d/6463d49a933f547439d6b5b98b46af8742cc03ae83543e4d7688c2420f8b/pip-21.3.1-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "deaf32dcd9ab821e359cd8330786bcd077604b5c5730c0b096eda46f95c24a2d"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pip/21.3.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "platformdirs",
+			"SPDXID": "SPDXRef-Package-platformdirs-2.4.1",
+			"versionInfo": "2.4.1",
+			"supplier": "NOASSERTION",
+			"downloadLocation": "https://files.pythonhosted.org/packages/9f/3d/4606ee54e0af98aa8f9a672b5acfd69318a5917fbb9f8e2c3aaf9c2f293f/platformdirs-2.4.1-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "1d7385c7db91728b83efd0ca99a5afb296cab9d0ed8313a45ed8ba17967ecfca"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/platformdirs/2.4.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pluggy",
+			"SPDXID": "SPDXRef-Package-pluggy-1.0.0",
+			"versionInfo": "1.0.0",
+			"supplier": "Person: Holger Krekel (holger@merlinux.eu)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/9e/01/f38e2ff29715251cf25532b9082a1589ab7e4f571ced434f98d0139336dc/pluggy-1.0.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pluggy/1.0.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pre-commit",
+			"SPDXID": "SPDXRef-Package-pre-commit-2.17.0",
+			"versionInfo": "2.17.0",
+			"supplier": "Person: Anthony Sottile (asottile@umich.edu)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/d6/a0/9c06353771c8dae6db437dd513a885eccdb1566cb332569130484eddf4e7/pre_commit-2.17.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "725fa7459782d7bec5ead072810e47351de01709be838c2ce1726b9591dad616"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pre-commit/2.17.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "py",
+			"SPDXID": "SPDXRef-Package-py-1.11.0",
+			"versionInfo": "1.11.0",
+			"supplier": "Person: holger krekel, Ronny Pfannschmidt, Benjamin Peterson and others (pytest-dev@python.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/f6/f0/10642828a8dfb741e5f3fbaac830550a518a775c7fff6f04a007259b0548/py-1.11.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/py/1.11.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pycodestyle",
+			"SPDXID": "SPDXRef-Package-pycodestyle-2.7.0",
+			"versionInfo": "2.7.0",
+			"supplier": "Person: Johann C. Rocholl (johann@rocholl.net)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/de/cc/227251b1471f129bc35e966bb0fceb005969023926d744139642d847b7ae/pycodestyle-2.7.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pycodestyle/2.7.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pyflakes",
+			"SPDXID": "SPDXRef-Package-pyflakes-2.3.1",
+			"versionInfo": "2.3.1",
+			"supplier": "Person: A lot of people (code-quality@python.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/6c/11/2a745612f1d3cbbd9c69ba14b1b43a35a2f5c3c81cd0124508c52c64307f/pyflakes-2.3.1-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "7893783d01b8a89811dd72d7dfd4d84ff098e5eed95cfa8905b22bbffe52efc3"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pyflakes/2.3.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pyparsing",
+			"SPDXID": "SPDXRef-Package-pyparsing-3.0.7",
+			"versionInfo": "3.0.7",
+			"supplier": "Person: Paul McGuire (ptmcg.gm+pyparsing@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/80/c1/23fd82ad3121656b585351aba6c19761926bb0db2ebed9e4ff09a43a3fcc/pyparsing-3.0.7-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "a6c06a88f252e6c322f65faf8f418b16213b51bdfaece0524c1c1bc30c63c484"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pyparsing/3.0.7",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pytest",
+			"SPDXID": "SPDXRef-Package-pytest-6.2.5",
+			"versionInfo": "6.2.5",
+			"supplier": "Person: Holger Krekel, Bruno Oliveira, Ronny Pfannschmidt, Floris Bruynooghe, Brianna Laugher, Florian Bruhin and others",
+			"downloadLocation": "https://files.pythonhosted.org/packages/40/76/86f886e750b81a4357b6ed606b2bcf0ce6d6c27ad3c09ebf63ed674fc86e/pytest-6.2.5-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pytest/6.2.5",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "pytest-cov",
+			"SPDXID": "SPDXRef-Package-pytest-cov-2.12.1",
+			"versionInfo": "2.12.1",
+			"supplier": "Person: Marc Schlaich (marc.schlaich@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/ba/84/576b071aef9ac9301e5c0ff35d117e12db50b87da6f12e745e9c5f745cc2/pytest_cov-2.12.1-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "261bb9e47e65bd099c89c3edf92972865210c36813f80ede5277dceb77a4a62a"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/pytest-cov/2.12.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "PyYAML",
+			"SPDXID": "SPDXRef-Package-PyYAML-6.0",
+			"versionInfo": "6.0",
+			"supplier": "Person: Kirill Simonov (xi@resolvent.net)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/36/2b/61d51a2c4f25ef062ae3f74576b01638bebad5e045f747ff12643df63844/PyYAML-6.0.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/PyYAML/6.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "setuptools",
+			"SPDXID": "SPDXRef-Package-setuptools-58.5.3",
+			"versionInfo": "58.5.3",
+			"supplier": "Organization: Python Packaging Authority (distutils-sig@python.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/70/e9/84e2865fddfaba4506bc5d293d2a535bf27e31b12ca16d31564f8ce28cdb/setuptools-58.5.3-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "a481fbc56b33f5d8f6b33dce41482e64c68b668be44ff42922903b03872590bf"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/setuptools/58.5.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "six",
+			"SPDXID": "SPDXRef-Package-six-1.16.0",
+			"versionInfo": "1.16.0",
+			"supplier": "Person: Benjamin Peterson (benjamin@python.org)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/six/1.16.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "toml",
+			"SPDXID": "SPDXRef-Package-toml-0.10.2",
+			"versionInfo": "0.10.2",
+			"supplier": "Person: William Pearson (uiri@xqz.ca)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/toml/0.10.2",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "tomli",
+			"SPDXID": "SPDXRef-Package-tomli-2.0.0",
+			"versionInfo": "2.0.0",
+			"supplier": "NOASSERTION",
+			"downloadLocation": "https://files.pythonhosted.org/packages/3d/6e/d290c9bf16159f02b70c432386aa5bfe22c2857ff460591912fd907b61f6/tomli-2.0.0.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "c292c34f58502a1eb2bbb9f5bbc9a5ebc37bee10ffb8c2d6bbdfa8eb13cc14e1"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/tomli/2.0.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "tox",
+			"SPDXID": "SPDXRef-Package-tox-3.24.3",
+			"versionInfo": "3.24.3",
+			"supplier": "Person: Holger Krekel, Oliver Bestwalter, Bernát Gábor and others",
+			"downloadLocation": "https://files.pythonhosted.org/packages/26/90/ca4779bd06f0a35dc4b1510109291b1cd0c440afc1dcc5271ff82b090c70/tox-3.24.3-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "9fbf8e2ab758b2a5e7cb2c72945e4728089934853076f67ef18d7575c8ab6b88"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/tox/3.24.3",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "typing_extensions",
+			"SPDXID": "SPDXRef-Package-typing-extensions-4.0.1",
+			"versionInfo": "4.0.1",
+			"supplier": "NOASSERTION",
+			"downloadLocation": "https://files.pythonhosted.org/packages/0d/4a/60ba3706797b878016f16edc5fbaf1e222109e38d0fa4d7d9312cb53f8dd/typing_extensions-4.0.1.tar.gz",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/typing_extensions/4.0.1",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "virtualenv",
+			"SPDXID": "SPDXRef-Package-virtualenv-20.13.0",
+			"versionInfo": "20.13.0",
+			"supplier": "Person: Bernat Gabor (gaborjbernat@gmail.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/ef/a1/4e1700f25211b3851e6be6675061e0c8eae7585d80177a40e9b02d1105d8/virtualenv-20.13.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "339f16c4a86b44240ba7223d0f93a7887c3ca04b5f9c8129da7958447d079b09"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/virtualenv/20.13.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "Werkzeug",
+			"SPDXID": "SPDXRef-Package-Werkzeug-2.0.2",
+			"versionInfo": "2.0.2",
+			"supplier": "Person: Armin Ronacher (armin.ronacher@active-4.com)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/1e/73/51137805d1b8d97367a8a77cae4a792af14bb7ce58fbd071af294c740cf0/Werkzeug-2.0.2-py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "63d3dc1cf60e7b7e35e97fa9861f7397283b75d765afcaefd993d6046899de8f"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/Werkzeug/2.0.2",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		},
+		{
+			"name": "wheel",
+			"SPDXID": "SPDXRef-Package-wheel-0.37.0",
+			"versionInfo": "0.37.0",
+			"supplier": "Person: Daniel Holth (dholth@fastmail.fm)",
+			"downloadLocation": "https://files.pythonhosted.org/packages/04/80/cad93b40262f5d09f6de82adbee452fd43cdff60830b56a74c5930f7e277/wheel-0.37.0-py2.py3-none-any.whl",
+			"filesAnalyzed": false,
+			"checksums": [
+				{
+					"algorithm": "SHA256",
+					"checksumValue": "21014b2bd93c6d0034b6ba5d35e4eb284340e09d63c59aef6fc14b0f346146fd"
+				}
+			],
+			"homepage": "https://pypi.org/pypi/wheel/0.37.0",
+			"licenseConcluded": "NOASSERTION",
+			"licenseDeclared": "NOASSERTION",
+			"copyrightText": "NOASSERTION",
+			"licenseComments": "NOASSERTION",
+			"comment": "NOASSERTION"
+		}
+	],
+	"relationships": [
+		{
+			"spdxElementId": "SPDXRef-Package-black-22.1.0",
+			"relatedSpdxElement": "SPDXRef-Package-pathspec-0.9.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-black-22.1.0",
+			"relatedSpdxElement": "SPDXRef-Package-platformdirs-2.4.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-black-22.1.0",
+			"relatedSpdxElement": "SPDXRef-Package-tomli-2.0.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-black-22.1.0",
+			"relatedSpdxElement": "SPDXRef-Package-click-8.0.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-black-22.1.0",
+			"relatedSpdxElement": "SPDXRef-Package-mypy-extensions-0.4.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-flake8-3.9.2",
+			"relatedSpdxElement": "SPDXRef-Package-mccabe-0.6.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-flake8-3.9.2",
+			"relatedSpdxElement": "SPDXRef-Package-pycodestyle-2.7.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-flake8-3.9.2",
+			"relatedSpdxElement": "SPDXRef-Package-pyflakes-2.3.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-Flask-2.0.2",
+			"relatedSpdxElement": "SPDXRef-Package-click-8.0.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-Flask-2.0.2",
+			"relatedSpdxElement": "SPDXRef-Package-itsdangerous-2.0.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-Flask-2.0.2",
+			"relatedSpdxElement": "SPDXRef-Package-Jinja2-3.0.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-Flask-2.0.2",
+			"relatedSpdxElement": "SPDXRef-Package-Werkzeug-2.0.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-Jinja2-3.0.3",
+			"relatedSpdxElement": "SPDXRef-Package-MarkupSafe-2.0.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-mypy-0.910",
+			"relatedSpdxElement": "SPDXRef-Package-toml-0.10.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-mypy-0.910",
+			"relatedSpdxElement": "SPDXRef-Package-mypy-extensions-0.4.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-NetzplanAPP-Sebastian-Meisel-0.0.1",
+			"relatedSpdxElement": "SPDXRef-Package-Werkzeug-2.0.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-NetzplanAPP-Sebastian-Meisel-0.0.1",
+			"relatedSpdxElement": "SPDXRef-Package-Flask-2.0.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-NetzplanAPP-Sebastian-Meisel-0.0.1",
+			"relatedSpdxElement": "SPDXRef-Package-openpyxl-3.0.9",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-NetzplanAPP-Sebastian-Meisel-0.0.1",
+			"relatedSpdxElement": "SPDXRef-Package-Pillow-9.0.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-openpyxl-3.0.9",
+			"relatedSpdxElement": "SPDXRef-Package-et-xmlfile-1.1.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-packaging-21.3",
+			"relatedSpdxElement": "SPDXRef-Package-pyparsing-3.0.7",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pre-commit-2.17.0",
+			"relatedSpdxElement": "SPDXRef-Package-toml-0.10.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pre-commit-2.17.0",
+			"relatedSpdxElement": "SPDXRef-Package-virtualenv-20.13.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pre-commit-2.17.0",
+			"relatedSpdxElement": "SPDXRef-Package-cfgv-3.3.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pre-commit-2.17.0",
+			"relatedSpdxElement": "SPDXRef-Package-identify-2.4.7",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pre-commit-2.17.0",
+			"relatedSpdxElement": "SPDXRef-Package-nodeenv-1.6.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pre-commit-2.17.0",
+			"relatedSpdxElement": "SPDXRef-Package-PyYAML-6.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-6.2.5",
+			"relatedSpdxElement": "SPDXRef-Package-packaging-21.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-6.2.5",
+			"relatedSpdxElement": "SPDXRef-Package-pluggy-1.0.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-6.2.5",
+			"relatedSpdxElement": "SPDXRef-Package-py-1.11.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-6.2.5",
+			"relatedSpdxElement": "SPDXRef-Package-toml-0.10.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-6.2.5",
+			"relatedSpdxElement": "SPDXRef-Package-attrs-21.4.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-6.2.5",
+			"relatedSpdxElement": "SPDXRef-Package-iniconfig-1.1.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-cov-2.12.1",
+			"relatedSpdxElement": "SPDXRef-Package-coverage-6.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-cov-2.12.1",
+			"relatedSpdxElement": "SPDXRef-Package-pytest-6.2.5",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-pytest-cov-2.12.1",
+			"relatedSpdxElement": "SPDXRef-Package-toml-0.10.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-six-1.16.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-toml-0.10.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-virtualenv-20.13.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-filelock-3.4.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-packaging-21.3",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-pluggy-1.0.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-tox-3.24.3",
+			"relatedSpdxElement": "SPDXRef-Package-py-1.11.0",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-virtualenv-20.13.0",
+			"relatedSpdxElement": "SPDXRef-Package-distlib-0.3.4",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-virtualenv-20.13.0",
+			"relatedSpdxElement": "SPDXRef-Package-filelock-3.4.2",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-virtualenv-20.13.0",
+			"relatedSpdxElement": "SPDXRef-Package-platformdirs-2.4.1",
+			"relationshipType": "DEPENDS_ON"
+		},
+		{
+			"spdxElementId": "SPDXRef-Package-virtualenv-20.13.0",
+			"relatedSpdxElement": "SPDXRef-Package-six-1.16.0",
+			"relationshipType": "DEPENDS_ON"
+		}
+	]
+}
