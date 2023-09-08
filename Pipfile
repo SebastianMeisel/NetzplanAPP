@@ -7,7 +7,7 @@ name = "pypi"
 netzplanapp-sebastian-meisel = {editable = true, path = "."}
 openpyxl = "==3.0.9"
 Flask = "==2.0.2"
-Pillow = "==9.0.0"
+Pillow = "==9.0.1"
 Werkzeug = "==2.0.2"
 flake8 = "==3.9.2"
 tox = "==3.24.3"
