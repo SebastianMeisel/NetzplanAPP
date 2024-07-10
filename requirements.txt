@@ -2,3 +2,4 @@ Flask==2.2.5
 openpyxl==3.0.9
 Pillow==9.4.0
 Werkzeug==2.2.3
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
